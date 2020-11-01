@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="welcome"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Sign Up</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div class="content">
+
+    <div class="cont-2">
+      <p style="font-size: small; margin-bottom: 30px;"><b>Complete your registration by filling up the form</b></p>
+    </div>
+
+    <div class="cont-1">
+      <form [formGroup]="ownerForm" (ngSubmit)="register_Owner()">
+        <ion-input formControlName="firstName" style="margin-bottom: 10px;" type="text" placeholder="First name"></ion-input>
+        <ion-input formControlName="lastName" style="margin-bottom: 10px;" type="text" placeholder="Last name"></ion-input>
+        <ion-input formControlName="email" style="margin-bottom: 10px;" type="email" placeholder="Email"></ion-input>
+        <ion-input formControlName="mobile" style="margin-bottom: 10px;" type="number" placeholder="Mobile"></ion-input>
+        <ion-input formControlName="password" style="margin-bottom: 10px;" type="password" placeholder="Password"></ion-input>
+
+        <ion-button class="btnsignup" (click)="register_Owner()" fill="clear" *ngIf="!spin">
+          Sign up
+        </ion-button>
+      </form>
+
+    </div>
+
+    <div class="cont-2">
+      <p style="font-size: small; margin-top: 0px;">Already have an account?<a routerLink="/signin"><b> Sign in</b></a></p>
+    </div>
+
+    <div class="ion-text-center" *ngIf="spin">
+      <ion-spinner color="primary"></ion-spinner>
+    </div>
+
+  </div>
+
+</ion-content>

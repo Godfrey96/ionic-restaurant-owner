@@ -1,0 +1,74 @@
+
+// ion-content.background{
+//     --background:url(../../../assets/images/bg.jpg) 0 0/100% 100% no-repeat;
+//     --background: #50A581;
+// }
+
+head{
+    display: flex;
+    flex-direction: column;
+    // justify-content: flex-start;
+    // align-items: flex-start;
+}
+
+.btns{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    // align-items: center;
+    margin-top: 150px;
+}
+
+ion-row{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.signup{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.google{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.line{
+    border-bottom: 1px solid grey;
+    margin-bottom: 16px;
+}
+
+.btnsignup{
+    --background: #50A581;
+    border-radius: 6px;
+    color: #ffffff;
+    font-weight: bold;
+    text-transform: none;
+    width: 90%;
+    height: 40px;
+}
+
+.btngoogle{
+    --background: red;
+    border-radius: 6px;
+    color: #ffffff;
+    font-weight: bold;
+    text-transform: none;
+    width: 90%;
+    height: 40px;
+}
+
+a{
+    list-style-type: none;
+    text-decoration: none;
+    color: #FFFFFF;
+}

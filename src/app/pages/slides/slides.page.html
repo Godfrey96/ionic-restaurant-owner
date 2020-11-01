@@ -1,0 +1,40 @@
+<!-- <ion-header>
+  <ion-toolbar>
+    <ion-title>slides</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-content>
+
+  <div class="center">
+    
+    <ion-slides #slides pager="true" [options]="slideOpts" (ionSlideDidChange)="ionSlideChange(slides)">
+
+      <ion-slide class="step-one">
+        <img class="imgSize" src="../../../assets/slides/a.png" alt="" />
+        <h1 class="head">Book a table</h1>
+        <p style="color: #FFFFFF;">Reserve your reservation anytime, anywhere</p>
+      </ion-slide>
+
+      <ion-slide class="step-one">
+        <img class="imgSize" src="../../../assets/slides/b.png" alt="" />
+        <h1 class="head">Special offers</h1>
+        <p style="color: #FFFFFF;">Find special offers from your favorite restaurants</p>
+      </ion-slide>
+
+      <ion-slide class="step-one">
+        <img class="imgSize" src="../../../assets/slides/c.png" alt="" />
+        <h1 class="head">Discover</h1>
+        <p style="color: #FFFFFF;">Search the popular and top rated restaurant in your area</p>
+      </ion-slide>
+
+    </ion-slides>
+
+    <ion-button class="tour-button" (click)="next()">
+      <div class="parent"> {{ buttonName }} </div>
+    </ion-button>
+
+  </div>
+
+
+</ion-content>

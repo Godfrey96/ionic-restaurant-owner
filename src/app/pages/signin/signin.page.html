@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Sign In</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div class="content">
+
+    <div class="cont-1">
+      <form [formGroup]="loginForm" (ngSubmit)="login_Owner()">
+        <ion-input formControlName="email" style="margin-bottom: 10px;" type="email" placeholder="Email"></ion-input>
+        <ion-input formControlName="password" style="margin-bottom: 10px;" type="password" placeholder="Password"></ion-input>
+
+        <ion-button class="btnsignup" (click)="login_Owner()" fill="clear" *ngIf="!spin">
+          Sign in
+        </ion-button>
+      </form>
+
+    </div>
+
+    <div class="cont-2">
+      <p style="font-size: small; margin-top: 0px;">Don't have an account?<a routerLink="/signin"><b> Sign up
+            here</b></a></p>
+    </div>
+
+    <!-- <div class="signup">
+      <ion-button class="btnsignup" fill="clear">Sign in</ion-button>
+    </div> -->
+
+    <div class="ion-text-center" *ngIf="spin">
+      <ion-spinner color="primary"></ion-spinner>
+    </div>
+
+  </div>
+
+
+</ion-content>

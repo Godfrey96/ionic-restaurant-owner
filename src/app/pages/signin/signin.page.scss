@@ -1,0 +1,61 @@
+
+.content{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    margin-top: 50px;
+}
+
+.cont-1{
+    display: flex;
+    flex-direction: column;
+    margin-left: 15px;
+    margin-right: 20px;
+}
+
+.cont-2{
+    display: flex;
+    flex-direction: column;
+    margin-left: 18px;
+    margin-right: 20px;
+}
+
+.cont-3{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+ion-input{
+    background-color: #ededed;
+    border-radius: 5px;
+    font-size: small;
+    width: 100%;
+}
+
+.signup{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.btnsignup{
+    --background: #50A581;
+    border-radius: 6px;
+    color: #ffffff;
+    font-weight: bold;
+    text-transform: none;
+    width: 100%;
+    height: 40px;
+}
+
+a{
+    list-style-type: none;
+    text-decoration: none;
+    color: #50A581;
+}
