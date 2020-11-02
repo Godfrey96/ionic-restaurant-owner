@@ -1,9 +1,13 @@
 import { Component } from '@angular/core';
 
+import { MenuController, NavController } from '@ionic/angular';
+
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import firebase from 'firebase/app';
+
+import { AuthService } from '../app/services/auth.service';
 
 
 var firebaseConfig = {
@@ -26,10 +30,18 @@ export class AppComponent {
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
+    private menu: MenuController,
+    private authService: AuthService,
+    private nav: NavController
   ) {
     this.initializeApp();
     firebase.initializeApp(firebaseConfig);
+  }
+
+  openCustom() {
+    this.menu.enable(true, 'custom');
+    this.menu.open('custom');
   }
 
   initializeApp() {
@@ -37,5 +49,11 @@ export class AppComponent {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
+  }
+
+  logout(){
+    this.authService.logoutOwner();
+    this.authService.signAuth();
+    this.nav.navigateRoot('/')
   }
 }

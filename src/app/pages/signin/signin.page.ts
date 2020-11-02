@@ -35,7 +35,16 @@ export class SigninPage implements OnInit {
     // console.log(this.loginForm.value);
     this.authService.signinOwner(this.loginForm.value.email, this.loginForm.value.password).then((res) => {
       console.log(res.user);
-      this.nav.navigateRoot('/dashboard');
+      
+      this.authService.signAuth();
+
+      if(res.user.uid){
+        this.nav.navigateRoot('/dashboard');
+      }else{
+        this.nav.navigateRoot('/add-restaurant');
+      }
+
+      
     },
     async error => {
       const alert = await this.alertCtrl.create({

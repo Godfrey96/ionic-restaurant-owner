@@ -1,0 +1,93 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Add Restaurant</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div class="content">
+
+    <div class="cont-2">
+      <p style="font-size: small; margin-bottom: 30px;"><b>Add a new Restaurant</b></p>
+    </div>
+
+
+    <div class="cont-1">
+      <form [formGroup]="addRestaurantForm" (ngSubmit)="addRes()">
+        <ion-list>
+          <ion-input formControlName="resName" style="margin-bottom: 10px;" type="text" placeholder="Restaurant Name">
+          </ion-input>
+          <ion-input formControlName="phone" style="margin-bottom: 10px;" type="number" placeholder="Phone"></ion-input>
+          <ion-input formControlName="email" style="margin-bottom: 10px;" type="email" placeholder="Email"></ion-input>
+          <ion-input formControlName="website" style="margin-bottom: 10px;" type="text" placeholder="Website">
+          </ion-input>
+
+          <ion-row formArrayName="address">
+            <ion-col size="12" *ngFor="let group of addressArray.controls; let i = index;" [formGroupName]="i">
+              <ion-row>
+                <ion-col size="8">
+                  <h4>Address {{ i + 1 }}</h4>
+                </ion-col>
+                <ion-col size="4">
+                  <div class="btn">
+                    <ion-fab-button color="success" style="position: relative;" (click)="addAddress()">
+                      <ion-icon name="add"></ion-icon>
+                    </ion-fab-button>
+                    
+                    <ion-fab-button color="danger" (click)="removeAddress()">
+                      <ion-icon name="close"></ion-icon>
+                    </ion-fab-button>
+                  </div>
+                </ion-col>
+              </ion-row>
+
+              <ion-row>
+                <ion-col class="line" size="12" style="text-align: center;">
+                </ion-col>
+              </ion-row>
+
+              <ion-row>
+                <ion-col>
+                  <ion-input formControlName="street" style="margin-bottom: 10px;" type="text"
+                    placeholder="Street Address"></ion-input>
+                </ion-col>
+              </ion-row>
+
+              <ion-row>
+                <ion-col size="4">
+                  <ion-input formControlName="city" style="margin-bottom: 10px;" type="text"
+                    placeholder="City"></ion-input>
+                </ion-col>
+                <ion-col size="4">
+                  <ion-input formControlName="province" style="margin-bottom: 10px;" type="text"
+                    placeholder="Province"></ion-input>
+                </ion-col>
+                <ion-col size="4">
+                  <ion-input formControlName="zipCode" style="margin-bottom: 10px;" type="text"
+                    placeholder="Zip Code"></ion-input>
+                </ion-col>
+              </ion-row>
+
+            </ion-col>
+          </ion-row>
+        </ion-list>
+
+        <ion-button class="btnsignup" (click)="addRes()" fill="clear" *ngIf="!spin">
+          Add Restaurant
+        </ion-button>
+
+      </form>
+
+      <div class="ion-text-center" *ngIf="spin">
+        <ion-spinner color="primary"></ion-spinner>
+      </div>
+    </div>
+
+
+  </div>
+
+</ion-content>
