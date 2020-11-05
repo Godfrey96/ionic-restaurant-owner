@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="dashboard"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Menu</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div class="content">
+
+    <div class="addMune">
+      <ion-button (click)="addmuenu()">Add menu</ion-button>
+    </div>
+
+    <ion-list>
+
+      <ion-item *ngFor="let menus of menu">  
+        <ion-avatar slot="start">
+          <img src="{{menus.imgUrl}}">
+        </ion-avatar>
+        <ion-label>
+          <h2>{{menus.name}}</h2>
+          <p>{{menus.description}}</p>
+          <p>{{menus.price | currency: 'ZAR '}}</p>
+        </ion-label>
+      </ion-item>
+
+    </ion-list>
+    
+  </div>
+
+</ion-content>

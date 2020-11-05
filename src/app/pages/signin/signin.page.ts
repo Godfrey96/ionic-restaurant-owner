@@ -19,10 +19,14 @@ export class SigninPage implements OnInit {
               private fb: FormBuilder,
               private authService: AuthService,
               private alertCtrl: AlertController
-            ) { }
+            ) { 
+              // this.authService.getSession();
+            }
 
   ngOnInit() {
+    // this.authService.signAuth();
     this.loginOwner();
+    
   }
   loginOwner(){
     this.loginForm = this.fb.group({
@@ -32,11 +36,11 @@ export class SigninPage implements OnInit {
   }
 
   async login_Owner(){
-    // console.log(this.loginForm.value);
+    this.authService.signAuth();
+ 
+    console.log(this.loginForm.value);
     this.authService.signinOwner(this.loginForm.value.email, this.loginForm.value.password).then((res) => {
       console.log(res.user);
-      
-      this.authService.signAuth();
 
       if(res.user.uid){
         this.nav.navigateRoot('/dashboard');

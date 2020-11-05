@@ -1,0 +1,51 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="dashboard"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Profile</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div class="content">
+
+    <div class="imgage">
+      <img style="width: 90%; height: 150px;" src="{{restaurants?.imgUrl}}" alt="">
+    </div>
+
+    <div class="cont-1">
+      <ion-grid >
+        <ion-item>
+          Restaurant name: 
+          {{restaurants?.resName}}
+        </ion-item>
+  
+        <ion-item>
+          Email: 
+          {{restaurants?.email}}
+        </ion-item>
+  
+        <ion-item>
+          Phone: 
+          +27{{restaurants?.phone}}
+        </ion-item>
+  
+        <ion-item>
+          Website: 
+          {{restaurants?.website}}
+        </ion-item>
+  
+        <ion-item>
+          Address: 
+          {{restaurants?.address}}
+        </ion-item>
+      </ion-grid>
+    </div>
+
+    <ion-button (click)="newRestaurant()">Add New Restaurant</ion-button>
+
+  </div>
+
+</ion-content>

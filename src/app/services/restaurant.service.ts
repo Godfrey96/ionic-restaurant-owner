@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { resolveCname } from 'dns';
+
+import { Restaurant } from '../model/restaurant';
 
 import firebase from 'firebase/app'
+import 'firebase/firestore'
 import 'firebase/auth'
-import { userInfo } from 'os';
 
 @Injectable({
   providedIn: 'root'
@@ -16,15 +17,16 @@ export class RestaurantService {
   constructor() { }
 
   // Add restaurant
-  registerRestaurant(resName, phone, email, website, address) {
-    firebase.database().ref('restaurants').set({
-      resName: resName,
-      phone: phone,
-      email: email,
-      website: website,
-      address: address
-    }).then((res) => {
-      console.log(res)
-    })
+  registerRestaurant() {
+    return firebase.firestore().collection('restaurants');
   }
+
+  getAllBookings(){
+    return firebase.firestore().collection('restaurants');
+  }
+
+  // Add menu
+  // add_menu(){
+  //   return firebase.firestore().collection('menu');
+  // }
 }

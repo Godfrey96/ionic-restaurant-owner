@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="menu"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Add Menu</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div class="content">
+
+    <div class="cont-2">
+      <p style="font-size: small; margin-bottom: 30px;"><b>Add a new Menu</b></p>
+    </div>
+
+
+    <div class="cont-1">
+      <form [formGroup]="addMenuForm" (ngSubmit)="addMenu()">
+        <ion-list>
+          <ion-input formControlName="name" style="margin-bottom: 10px;" type="text" placeholder="Menu name"></ion-input>
+          <ion-input formControlName="price" style="margin-bottom: 10px;" type="number" placeholder="Price"></ion-input>
+          <!-- <ion-input formControlName="email" style="margin-bottom: 10px;" type="email" placeholder="Email"></ion-input> -->
+          <!-- <ion-input formControlName="website" style="margin-bottom: 10px;" type="text" placeholder="Website"></ion-input> -->
+          <ion-item>
+            <ion-textarea formControlName="description" style="margin-bottom: 10px;" placeholder="Enter more description here..."></ion-textarea>
+          </ion-item>
+          <ion-input type="file" style="margin-top: 10px;" formControlName="imgUrl" accept="image/*" (change)="onFileSelected($event)"></ion-input>
+          
+        </ion-list>
+          
+        <ion-button class="btnsignup" (click)="addMenu()" *ngIf="!spin">
+          Add Menu
+        </ion-button>
+
+      </form>
+
+      <div class="ion-text-center" *ngIf="spin">
+        <ion-spinner color="primary"></ion-spinner>
+      </div>
+    </div>
+
+  </div>
+
+</ion-content>

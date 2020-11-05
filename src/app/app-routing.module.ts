@@ -37,6 +37,22 @@ const routes: Routes = [
     path: 'add-restaurant',
     loadChildren: () => import('./pages/add-restaurant/add-restaurant.module').then( m => m.AddRestaurantPageModule)
   },
+  {
+    path: 'menu',
+    loadChildren: () => import('./pages/menu/menu.module').then( m => m.MenuPageModule)
+  },
+  {
+    path: 'add-menu',
+    loadChildren: () => import('./pages/add-menu/add-menu.module').then( m => m.AddMenuPageModule)
+  },
+  {
+    path: 'profile',
+    loadChildren: () => import('./pages/profile/profile.module').then( m => m.ProfilePageModule)
+  },
+  {
+    path: 'view-bookings',
+    loadChildren: () => import('./pages/view-bookings/view-bookings.module').then( m => m.ViewBookingsPageModule)
+  },
 ];
 
 @NgModule({

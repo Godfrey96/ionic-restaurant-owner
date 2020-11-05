@@ -1,0 +1,28 @@
+.content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    margin-top: 50px;
+  }
+
+  .addMune{
+      display: flex;
+      margin-left: 20px;
+      margin-top: 10px;
+  }
+
+  .listmenu{
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      margin-top: 20px;
+      margin-left: 15px;
+      margin-right: 20px;
+  }
+
+  view{
+      justify-content: flex-end;
+      align-items: flex-end;
+
+  }

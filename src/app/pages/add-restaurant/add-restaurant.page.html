@@ -19,12 +19,12 @@
     <div class="cont-1">
       <form [formGroup]="addRestaurantForm" (ngSubmit)="addRes()">
         <ion-list>
-          <ion-input formControlName="resName" style="margin-bottom: 10px;" type="text" placeholder="Restaurant Name">
-          </ion-input>
+          <ion-input formControlName="resName" style="margin-bottom: 10px;" type="text" placeholder="Restaurant Name"></ion-input>
           <ion-input formControlName="phone" style="margin-bottom: 10px;" type="number" placeholder="Phone"></ion-input>
           <ion-input formControlName="email" style="margin-bottom: 10px;" type="email" placeholder="Email"></ion-input>
-          <ion-input formControlName="website" style="margin-bottom: 10px;" type="text" placeholder="Website">
-          </ion-input>
+          <ion-input formControlName="website" style="margin-bottom: 10px;" type="text" placeholder="Website"></ion-input>
+          <ion-input type="file" formControlName="imgUrl" accept="image/*" (change)="onFileSelected($event)"></ion-input>
+          <!-- <ion-input type="file" formControlName="imgUrl" accept="image/*" (change)="onFileSelected($event)" style="margin-bottom: 10px;" type="text" placeholder="Restaurant Image"></ion-input> -->
 
           <ion-row formArrayName="address">
             <ion-col size="12" *ngFor="let group of addressArray.controls; let i = index;" [formGroupName]="i">
