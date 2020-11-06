@@ -106,7 +106,7 @@ export class AddRestaurantPage implements OnInit {
       imgUrl: this.addRestaurantForm.value.imgUrl,
       address: this.addRestaurantForm.value.address
     }).then(function(docRef){
-      //console.log("Document written with ID: ", docRef.id);
+      console.log("Document written with ID: ", docRef);
     }).catch(function(error){
       console.log(error);
     });

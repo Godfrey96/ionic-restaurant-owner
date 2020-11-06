@@ -33,7 +33,7 @@ export class SignupPage implements OnInit {
 
   addOwner() {
     this.ownerForm = this.fb.group({
-      empNo: ['', Validators.required],
+      name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       mobile: ['', Validators.required],
       password: ['', Validators.required]
@@ -44,7 +44,7 @@ export class SignupPage implements OnInit {
     console.log(this.ownerForm.value);
     this.authService.signupOwner(this.ownerForm.value.email, this.ownerForm.value.password).then((res) => {
       return firebase.firestore().collection('owners').doc(res.user.uid).set({
-        empNo: this.ownerForm.value.empNo,
+        name: this.ownerForm.value.name,
         mobile: this.ownerForm.value.mobile
       }).then(() => {
         console.log(res.user);

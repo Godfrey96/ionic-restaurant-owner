@@ -31,5 +31,12 @@ export class ViewBookingsPage implements OnInit {
       })
     })
   }
+  //collection('users').doc(user).
+
+  // confirm(){
+    
+  //   console.log('btn clicked')
+  //   alert('confirmed')
+  // }
 
 }
