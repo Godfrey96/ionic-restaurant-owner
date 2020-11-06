@@ -67,7 +67,8 @@ export class AddMenuPage implements OnInit {
     var user = firebase.auth().currentUser
     this.ownerId = user.uid;
 
-    this.restaurantService.registerRestaurant().doc(this.ownerId).collection('menu').add({
+    // Registering a new restaurant
+    this.restaurantService.registerRestaurant().doc(this.ownerId).collection('menu').doc(this.ownerId).set({
       ownerId: this.ownerId,
       name: this.addMenuForm.value.name,
       price: this.addMenuForm.value.price,
