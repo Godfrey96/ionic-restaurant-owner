@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormBuilder, FormArray } from '@angular/forms';
-import { AlertController, NavController } from '@ionic/angular';
+import { AlertController, NavController, LoadingController } from '@ionic/angular';
 
 import firebase from 'firebase/app';
 import 'firebase/firestore';
@@ -26,14 +26,13 @@ export class AddRestaurantPage implements OnInit {
   upLoadedFile: any;
 
   constructor(
+    public loadingCtrl: LoadingController,
     public nav: NavController,
     private fb: FormBuilder,
     private authService: AuthService,
     private restaurantService: RestaurantService,
     private alertCtrl: AlertController
-  ) { 
-    // this.authService.getSession();
-  }
+  ) {  }
 
   ngOnInit() {
     if(this.authService.signAuth()){
@@ -91,27 +90,49 @@ export class AddRestaurantPage implements OnInit {
     return <FormArray>this.addRestaurantForm.get('address');
   }
 
-  addRes() {
-    console.log(this.addRestaurantForm.value);
-    var user = firebase.auth().currentUser
+  async addRes() {
 
-    this.ownerId = user.uid;
+    const alert = await this.alertCtrl.create({
 
-    this.restaurantService.registerRestaurant().doc(this.ownerId).set({
-      ownerId: this.ownerId,
-      resName: this.addRestaurantForm.value.resName,
-      phone: this.addRestaurantForm.value.phone,
-      email: this.addRestaurantForm.value.email,
-      website: this.addRestaurantForm.value.website,
-      imgUrl: this.addRestaurantForm.value.imgUrl,
-      address: this.addRestaurantForm.value.address
-    }).then(function(docRef){
-      console.log("Document written with ID: ", docRef);
-    }).catch(function(error){
-      console.log(error);
+      message: `Your restaurant is added successfulluy, please click Okay to confirm`,
+      buttons: [
+        {
+          text: 'Okay',
+          handler: () => {
+
+            console.log(this.addRestaurantForm.value);
+            var user = firebase.auth().currentUser
+            this.ownerId = user.uid;
+
+            this.restaurantService.registerRestaurant().doc(this.ownerId).set({
+              ownerId: this.ownerId,
+              resName: this.addRestaurantForm.value.resName,
+              phone: this.addRestaurantForm.value.phone,
+              email: this.addRestaurantForm.value.email,
+              website: this.addRestaurantForm.value.website,
+              imgUrl: this.addRestaurantForm.value.imgUrl,
+              address: this.addRestaurantForm.value.address
+            }).then(() => {
+              this.nav.navigateRoot('/profile');
+              this.addRestaurantForm.reset();
+            }).catch(function(error){
+              console.log(error)
+            });
+          },
+        },
+      ]
     });
-    this.nav.navigateRoot('/profile')
-    this.addRestaurantForm.reset();
+    return await alert.present();
+
+    
+
+    // .then(function(docRef){
+    //   console.log("Document written with ID: ", docRef);
+    // }).catch(function(error){
+    //   console.log(error);
+    // });
+    // this.nav.navigateRoot('/profile')
+    // this.addRestaurantForm.reset();
 
     // this.restaurantService.registerRestaurant().doc(user.uid).add({
     //   resName: this.addRestaurantForm.value.resName,

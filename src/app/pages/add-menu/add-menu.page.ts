@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, Validators, FormBuilder, FormArray } from '@angular/forms';
-import { AlertController, NavController } from '@ionic/angular';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { AlertController, NavController, LoadingController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
 import { RestaurantService } from 'src/app/services/restaurant.service';
 
@@ -26,11 +26,12 @@ export class AddMenuPage implements OnInit {
 
   constructor(
     public nav: NavController,
+    public loadingCtrl: LoadingController,
     private fb: FormBuilder,
     private authService: AuthService,
     private restaurantService: RestaurantService,
     private alertCtrl: AlertController
-  ) { 
+  ) {
     // this.authService.getSession();
   }
 
@@ -63,24 +64,48 @@ export class AddMenuPage implements OnInit {
     };
   }
 
-  addMenu(){
+  async addMenu() {
+
+    const loading = await this.loadingCtrl.create();
+
     var user = firebase.auth().currentUser
     this.ownerId = user.uid;
 
-    // Registering a new restaurant
-    this.restaurantService.registerRestaurant().doc(this.ownerId).collection('menu').doc(this.ownerId).set({
+    // Adding new menu
+    this.restaurantService.registerRestaurant().doc(this.ownerId).collection('menu').add({
       ownerId: this.ownerId,
       name: this.addMenuForm.value.name,
       price: this.addMenuForm.value.price,
       description: this.addMenuForm.value.description,
       imgUrl: this.addMenuForm.value.imgUrl
-    }).then(function(docRef){
-      console.log("Document Menu ID: ", docRef)
-    }).catch(function(error){
-      console.log(error);
-    });
-    this.nav.navigateRoot('/menu')
-    this.addMenuForm.reset();
+    }).then(() => {
+      loading.dismiss().then(() => {
+        this.nav.navigateRoot('/menu')
+        this.addMenuForm.reset();
+      });
+    },
+      error => {
+        loading.dismiss().then(() => {
+          console.log(error);
+        });
+      }
+    );
+    return await loading.present();
+
+    // adding new menu
+    // this.restaurantService.registerRestaurant().doc(this.ownerId).collection('menu').add({
+    //   ownerId: this.ownerId,
+    //   name: this.addMenuForm.value.name,
+    //   price: this.addMenuForm.value.price,
+    //   description: this.addMenuForm.value.description,
+    //   imgUrl: this.addMenuForm.value.imgUrl
+    // }).then(function(docRef){
+    //   console.log("Document Menu ID: ", docRef)
+    // }).catch(function(error){
+    //   console.log(error);
+    // });
+    // this.nav.navigateRoot('/menu')
+    // this.addMenuForm.reset();
 
   }
 

@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="dashboard"></ion-back-button>
+    </ion-buttons>
+    <ion-title>View Menu</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div class="content">
+
+    <!-- <div class="addMune">
+      <ion-button>Add menu</ion-button>
+    </div> -->
+
+    <ion-list>
+
+      <ion-item>  
+        <ion-avatar slot="start">
+          <img src="{{menu?.imgUrl}}">
+        </ion-avatar>
+        <ion-label>
+          <h2>{{menu?.name}}</h2>
+          <p>{{menu?.description}}</p>
+          <p>{{menu?.price | currency: 'ZAR '}}</p>
+        </ion-label>
+      </ion-item>
+
+    </ion-list>
+    
+  </div>
+
+</ion-content>

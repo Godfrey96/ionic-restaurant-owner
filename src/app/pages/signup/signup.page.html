@@ -18,9 +18,27 @@
     <div class="cont-1">
       <form [formGroup]="ownerForm" (ngSubmit)="register_Owner()">
         <ion-input formControlName="name" style="margin-bottom: 10px;" type="text" placeholder="First and Last name"></ion-input>
+        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.name.errors?.required">
+          Name is required.
+        </span>
         <ion-input formControlName="email" style="margin-bottom: 10px;" type="email" placeholder="Email"></ion-input>
+        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.email.errors?.required">
+          Email is required.
+        </span>
+        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.email.errors?.pattern">
+          Please provide valid email.
+        </span>
         <ion-input formControlName="mobile" style="margin-bottom: 10px;" type="number" placeholder="Mobile"></ion-input>
+        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.mobile.errors?.required">
+          Mobile number is required.
+        </span>
+        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.mobile.errors?.pattern">
+          Only numerical values allowed.
+        </span>
         <ion-input formControlName="password" style="margin-bottom: 10px;" type="password" placeholder="Password"></ion-input>
+        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.password.errors?.required">
+          Password is required.
+        </span>
 
         <ion-button class="btnsignup" (click)="register_Owner()" fill="clear" *ngIf="!spin">
           Sign up

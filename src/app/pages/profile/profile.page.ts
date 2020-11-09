@@ -16,6 +16,8 @@ export class ProfilePage implements OnInit {
   // ownerId: any;
   // restaurants: Array<any>;
   restaurants: any;
+  show = false;
+  content = 'addRest';
   // array: any;
   x: any;
 
@@ -25,7 +27,7 @@ export class ProfilePage implements OnInit {
     private nav: NavController
   ) { }
 
-  ngOnInit() {
+  ngOnInit() { 
     this.authService.signAuth();
 
     let user = firebase.auth().currentUser.uid
@@ -34,9 +36,16 @@ export class ProfilePage implements OnInit {
     firebase.firestore().collection('restaurants').doc(user).get().then(snapshot => {
       this.restaurants = snapshot.data();
       //console.log('new data: ', this.restaurants)
+      if(user === 'ownerId'){
+        this.show = this.restaurants
+      }
     })
   }
 
+  editRestaurant(){
+
+  }
+  
   newRestaurant(){
     this.nav.navigateRoot('/add-restaurant')
   }

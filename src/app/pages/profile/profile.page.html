@@ -9,43 +9,65 @@
 
 <ion-content>
 
-  <div class="content">
+  <div *ngIf="restaurants; then thenShow; else elseShow"></div>
 
-    <div class="imgage">
-      <img style="width: 90%; height: 150px; margin-left: 18px; margin-top: 10px;" src="{{restaurants?.imgUrl}}" alt="">
+  <ng-template #thenShow>
+    <div class="content">
+
+      <div class="imgage">
+        <img style="width: 90%; height: 150px; margin-left: 18px; margin-top: 10px;" src="{{restaurants?.imgUrl}}" alt="">
+      </div>
+      <div class="editRes">
+        <ion-button size="small" [routerLink]="'/edit-restaurant/' +restaurants?.ownerId">Edit Profile</ion-button>
+      </div>
+  
+      <div class="cont-1">
+        <ion-grid >
+  
+          <ion-item>
+        
+          </ion-item>
+  
+          <ion-item>
+            <p style="font-size: 12px; font-weight: 600;">Restaurant: 
+              {{restaurants?.resName}}
+            </p>
+          </ion-item>
+    
+          <ion-item>
+            <p style="font-size: 12px; font-weight: 600;">Email:
+              {{restaurants?.email}}
+            </p>
+          </ion-item>
+    
+          <ion-item>
+            <p style="font-size: 12px; font-weight: 600;">Phone:
+              +27{{restaurants?.phone}}
+            </p>
+          </ion-item>
+    
+          <ion-item>
+            <p style="font-size: 12px; font-weight: 600;">Website:
+              {{restaurants?.website}}
+            </p>
+          </ion-item>
+    
+          <ion-item>
+            <p style="font-size: 12px; font-weight: 600;">Address:
+              {{restaurants?.address?.city }}
+            </p>    
+          </ion-item>
+        </ion-grid>
+      </div>
+  
     </div>
+  </ng-template>
 
-    <div class="cont-1">
-      <ion-grid >
-        <ion-item>
-          Restaurant name: 
-          {{restaurants?.resName}}
-        </ion-item>
-  
-        <ion-item>
-          Email: 
-          {{restaurants?.email}}
-        </ion-item>
-  
-        <ion-item>
-          Phone: 
-          +27{{restaurants?.phone}}
-        </ion-item>
-  
-        <ion-item>
-          Website: 
-          {{restaurants?.website}}
-        </ion-item>
-  
-        <ion-item>
-          Address: 
-          {{restaurants?.address | json}}
-        </ion-item>
-      </ion-grid>
+  <ng-template #elseShow>
+    <div class="addRes">
+      <p style="text-align: center;">No restaurant profile found, please click below to add a new one</p>
+      <ion-button color="success" (click)="newRestaurant()">Add New Restaurant</ion-button>
     </div>
-
-    <ion-button (click)="newRestaurant()">Add New Restaurant</ion-button>
-
-  </div>
+  </ng-template>
 
 </ion-content>

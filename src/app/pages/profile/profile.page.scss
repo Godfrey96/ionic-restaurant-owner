@@ -5,3 +5,26 @@
     flex-direction: column;
     // align-items: flex-start;
 }
+
+.cont-1{
+    margin-top: 10px;
+}
+
+.line{
+    border-bottom: 1px solid grey;
+    margin-bottom: 16px;
+}
+
+.editRes{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.addRes{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+}

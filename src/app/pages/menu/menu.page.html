@@ -17,7 +17,7 @@
 
     <ion-list>
 
-      <ion-item *ngFor="let menus of menu">  
+      <ion-item *ngFor="let menus of menu" [routerLink]="'/view-menu/' +menus?.ownerId">  
         <ion-avatar slot="start">
           <img src="{{menus.imgUrl}}">
         </ion-avatar>
