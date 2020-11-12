@@ -46,8 +46,8 @@ export class AddRestaurantPage implements OnInit {
   addRestaurant() {
     this.addRestaurantForm = this.fb.group({
       resName: ['', Validators.required],
-      phone: ['', Validators.required],
-      email: ['', Validators.required],
+      phone: ['', [ Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern('^[0-9]+$')]],
+      email: ['', [Validators.required, Validators.email]],
       website: ['', Validators.required],
       imgUrl: ['', Validators.required],
       address: this.fb.array([this.addAddressGroup()]),
@@ -89,6 +89,44 @@ export class AddRestaurantPage implements OnInit {
   get addressArray() {
     return <FormArray>this.addRestaurantForm.get('address');
   }
+
+  get resName() {
+    return this.addRestaurantForm.get("resName");
+  }
+
+  get phone() {
+    return this.addRestaurantForm.get("phone");
+  }
+
+  get website() {
+    return this.addRestaurantForm.get("website");
+  }
+
+  get imgUrl() {
+    return this.addRestaurantForm.get("imgUrl");
+  }
+  get email() {
+    return this.addRestaurantForm.get("email");
+  }
+
+  public errorMessages = {
+    resName: [
+      { type: 'required', message: 'Name is required' },
+      { type: 'maxLength', message: 'Name cannot be longer than 100 characters' }
+    ],
+    email: [
+      { type: 'required', message: 'Email is required' },
+      { type: 'pattern', message: 'Please provide valid email.' }
+    ],
+    phone: [
+      { type: 'required', message: 'Phone number is required.' },
+      { type: 'pattern', message: 'Only numerical values allowed.' }
+    ],
+    imgUrl: [
+      { type: 'required', message: 'Image is required.' }
+    ]
+  }
+
 
   async addRes() {
 

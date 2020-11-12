@@ -17,7 +17,7 @@ export class ProfilePage implements OnInit {
   // restaurants: Array<any>;
   restaurants: any;
   show = false;
-  content = 'addRest';
+  //content = 'addRest';
   // array: any;
   x: any;
 

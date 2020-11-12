@@ -29,16 +29,26 @@
 
         <ion-row>
           <ion-col size="8">
-            <p>Date: {{book.date}}</p>
+            <p>Date: {{book.date | date}}</p>
+            <p>Time: {{book.time | date: 'H:mm'}}</p>
             <p>Guests: {{book.guests}}</p>
             <p>Seating Preference: {{book.preference}}</p>
             <p>Mobile: +27{{book.mobile}}</p>
             <p>Email: {{book.email}}</p>
+            <p *ngIf="book.status == 'Pending'">Status: {{book.status}}</p> 
+            <p *ngIf="book.status == 'Approved'">Status: {{book.status}}</p> 
+            <p *ngIf="book.status == 'Declined'">Status: {{book.status}}</p> 
+            <!-- <p *ngIf="book.status == '0'">Status: Declined</p>
+            <p *ngIf="book.status == '1'">Status: Approved</p> -->
+            <!-- <ion-button (click)="status(book.ownerId, book.uid, '1')" >Approve</ion-button>
+            <ion-button (click)="status(book.ownerId, book.uid, '0')" >Decline</ion-button> -->
           </ion-col>
           <ion-col size="4">
-            <!-- <ion-button color="warning" size="small" shape="round">Pending</ion-button>
-            <ion-button color="success" size="small" shape="round" name="selected">Confirm</ion-button>
-            <ion-button color="danger" size="small" shape="round">Decline</ion-button> -->
+            <!-- <ion-button color="warning" size="small" shape="round">Pending</ion-button> -->
+            
+            <p (click)="status(book.ownerId, book.uid, 'Pending')"></p>
+            <ion-button (click)="status(book.ownerId, book.uid, 'Approved')" color="success" size="small" shape="round" name="selected">Confirm</ion-button>
+            <ion-button (click)="status(book.ownerId, book.uid, 'Declined')" color="danger" size="small" shape="round">Decline</ion-button>
           </ion-col>
         </ion-row>
       </ion-card-content>

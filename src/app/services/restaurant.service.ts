@@ -25,8 +25,17 @@ export class RestaurantService {
     return firebase.firestore().collection('restaurants');
   }
 
-  // Add menu
-  // add_menu(){
-  //   return firebase.firestore().collection('menu');
-  // }
+  bookingStatus(ownerId, userId, value){
+    var db = firebase.firestore();
+    var restaurantRef = db.collection('restaurants').doc(ownerId);
+
+    var restaurant = Promise.all([
+      restaurantRef.collection('bookings').doc(userId).set({
+        status: value
+        // userId: userId
+      }, { merge: true }).then(a => {
+        console.log('Changed')
+      })
+    ])
+  }
 }

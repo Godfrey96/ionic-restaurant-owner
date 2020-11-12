@@ -25,18 +25,18 @@ export class ViewBookingsPage implements OnInit {
     let user = firebase.auth().currentUser.uid
     console.log('user: ', user)
 
-    this.restaurantService.getAllBookings().doc(user).collection('bookings').where('ownerId', '==', user).onSnapshot(res => {
+    this.restaurantService.getAllBookings().doc(user).collection('bookings').where('ownerId', '==', user).orderBy('date', 'desc').onSnapshot(res => {
       res.forEach(element => {
-        this.booking.push(element.data());
+        this.booking.push(Object.assign( element.data(), {uid:element.id}) );
+        console.log('uuu: ' + {uid:element.id})
+        console.log('u: ' + element.id)
       })
     })
   }
-  //collection('users').doc(user).
 
-  // confirm(){
-    
-  //   console.log('btn clicked')
-  //   alert('confirmed')
-  // }
+  //Booking status
+  status(ownerId, userId, status){
+    this.restaurantService.bookingStatus(ownerId, userId, status);
+  }
 
 }

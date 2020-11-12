@@ -23,11 +23,31 @@
       <form [formGroup]="addRestaurantForm" (ngSubmit)="addRes()">
         <ion-list>
           <ion-input formControlName="resName" style="margin-bottom: 10px;" type="text" placeholder="Restaurant Name"></ion-input>
-          <ion-input formControlName="phone" style="margin-bottom: 10px;" type="number" placeholder="Phone"></ion-input>
+          <div *ngFor="let error of errorMessages.resName">
+            <ng-container *ngIf="resName.hasError(error.type) && (resName.dirty || resName.touched)">
+              <small style="color: red;" class="error-message">{{error.message}}</small>
+            </ng-container>
+          </div>
+          <ion-input formControlName="phone" style="margin-bottom: 10px;" type="text" placeholder="Phone"></ion-input>
+          <div *ngFor="let error of errorMessages.phone">
+            <ng-container *ngIf="phone.hasError(error.type) && (phone.dirty || phone.touched)">
+              <small style="color: red;" class="error-message">{{error.message}}</small>
+            </ng-container>
+          </div>
           <ion-input formControlName="email" style="margin-bottom: 10px;" type="email" placeholder="Email"></ion-input>
+          <div *ngFor="let error of errorMessages.email">
+            <ng-container *ngIf="email.hasError(error.type) && (email.dirty || email.touched)">
+              <small style="color: red;" class="error-message">{{error.message}}</small>
+            </ng-container>
+          </div>
           <ion-input formControlName="website" style="margin-bottom: 10px;" type="text" placeholder="Website"></ion-input>
           <ion-input type="file" formControlName="imgUrl" accept="image/*" (change)="onFileSelected($event)"></ion-input>
           <!-- <ion-input type="file" formControlName="imgUrl" accept="image/*" (change)="onFileSelected($event)" style="margin-bottom: 10px;" type="text" placeholder="Restaurant Image"></ion-input> -->
+          <div *ngFor="let error of errorMessages.imgUrl">
+            <ng-container *ngIf="imgUrl.hasError(error.type) && (imgUrl.dirty || imgUrl.touched)">
+              <small style="color: red;" class="error-message">{{error.message}}</small>
+            </ng-container>
+          </div>
 
           <ion-row formArrayName="address">
             <ion-col size="12" *ngFor="let group of addressArray.controls; let i = index;" [formGroupName]="i">

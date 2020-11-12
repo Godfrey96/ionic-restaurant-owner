@@ -12,6 +12,7 @@ import { AuthService } from '../../services/auth.service';
 export class SigninPage implements OnInit {
 
   loginForm: FormGroup;
+  isSubmitted: boolean = false;
   spin: boolean = false;
 
   constructor(
@@ -34,6 +35,24 @@ export class SigninPage implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required]
     });
+  }
+
+  get email() {
+    return this.loginForm.get("email");
+  }
+
+  get password() {
+    return this.loginForm.get("password");
+  }
+
+  public errorMessages = {
+    email: [
+      { type: 'required', message: 'Email is required' },
+      { type: 'pattern', message: 'Please provide valid email.' }
+    ],
+    password: [
+      { type: 'required', message: 'Password is required.' }
+    ]
   }
 
   async login_Owner(){

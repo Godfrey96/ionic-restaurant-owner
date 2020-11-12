@@ -41,8 +41,42 @@ export class SignupPage implements OnInit {
     });
   }
 
-  get errorControl() {
-    return this.ownerForm.controls;
+  // get errorControl() {
+  //   return this.ownerForm.controls;
+  // }
+
+  get name() {
+    return this.ownerForm.get("name");
+  }
+
+  get email() {
+    return this.ownerForm.get("email");
+  }
+
+  get mobile() {
+    return this.ownerForm.get("mobile");
+  }
+
+  get password() {
+    return this.ownerForm.get("password");
+  }
+
+  public errorMessages = {
+    name: [
+      { type: 'required', message: 'Name is required' },
+      { type: 'maxLength', message: 'Name cannot be longer than 100 characters' }
+    ],
+    email: [
+      { type: 'required', message: 'Email is required' },
+      { type: 'pattern', message: 'Please provide valid email.' }
+    ],
+    mobile: [
+      { type: 'required', message: 'Mobile number is required.' },
+      { type: 'pattern', message: 'Only numerical values allowed.' }
+    ],
+    password: [
+      { type: 'required', message: 'Password is required.' }
+    ]
   }
 
   async register_Owner() {
@@ -68,6 +102,8 @@ export class SignupPage implements OnInit {
                   console.log(error);
                 });
               })
+            }else{
+              console.log('Invalid field')
             }
             
           }
