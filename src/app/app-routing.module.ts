@@ -9,7 +9,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'welcome',
+    redirectTo: 'logo',
     pathMatch: 'full'
   },
   {
@@ -60,6 +60,10 @@ const routes: Routes = [
   {
     path: 'view-menu/:id',
     loadChildren: () => import('./pages/view-menu/view-menu.module').then( m => m.ViewMenuPageModule)
+  },
+  {
+    path: 'logo',
+    loadChildren: () => import('./pages/logo/logo.module').then( m => m.LogoPageModule)
   },
 ];
 

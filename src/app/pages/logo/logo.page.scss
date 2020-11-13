@@ -1,0 +1,15 @@
+
+
+ion-content{
+    --overflow: hidden;
+    text-align: center;
+    // --background: #50A581;
+}
+
+.img{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: -30px;
+}
