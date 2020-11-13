@@ -18,16 +18,16 @@ export class DashboardPage implements OnInit {
   }
 
   ngOnInit() {
-    // this.authService.signAuth();
+    this.authService.signAuth();
 
-    // let user = firebase.auth().currentUser.uid
-    // console.log('user: ', user)
+    let user = firebase.auth().currentUser.uid
+    console.log('user: ', user)
 
 
-    // firebase.firestore().collection('owners').doc(user).get().then(snapshot => {
-    //   this.owners = snapshot.data();
-      //console.log('new data: ', this.owners)
-    // })
+    firebase.firestore().collection('owners').doc(user).get().then(snapshot => {
+      this.owners = snapshot.data();
+      console.log('new data: ', this.owners)
+    })
   }
 
 }

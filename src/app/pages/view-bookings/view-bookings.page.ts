@@ -25,6 +25,7 @@ export class ViewBookingsPage implements OnInit {
     let user = firebase.auth().currentUser.uid
     console.log('user: ', user)
 
+    //Fetching restaurants bookings
     this.restaurantService.getAllBookings().doc(user).collection('bookings').where('ownerId', '==', user).orderBy('date', 'desc').onSnapshot(res => {
       res.forEach(element => {
         this.booking.push(Object.assign( element.data(), {uid:element.id}) );

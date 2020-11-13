@@ -54,6 +54,6 @@ export class AppComponent {
   logout(){
     this.authService.logoutOwner();
     this.authService.signAuth();
-    this.nav.navigateRoot('/')
+    this.nav.navigateRoot('/signin')
   }
 }
