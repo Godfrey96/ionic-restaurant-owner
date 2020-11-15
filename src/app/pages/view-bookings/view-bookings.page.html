@@ -16,7 +16,9 @@
     </div>
 
     <ion-card *ngFor="let book of booking">
-      <ion-card-title style="margin-left: 18px;">{{book.firstName}} {{book.lastName}}</ion-card-title>
+      <ion-card-title style="margin-left: 18px; font-size: small;">
+        {{book.firstName}} {{book.lastName}} - <b style="font-size: 9px;">{{book?.createdAt.toDate() | date}} - {{book?.createdAt.toDate() | date: 'H:mm'}}</b>
+      </ion-card-title>
       <ion-card-content>
       
         <ion-grid>
@@ -28,22 +30,20 @@
         </ion-grid>
 
         <ion-row>
-          <ion-col size="8">
-            <p>Date: {{book.date | date}}</p>
-            <p>Time: {{book.time | date: 'H:mm'}}</p>
-            <p>Guests: {{book.guests}}</p>
-            <p>Seating Preference: {{book.preference}}</p>
-            <p>Mobile: +27{{book.mobile}}</p>
-            <p>Email: {{book.email}}</p>
-            <p *ngIf="book.status == 'Pending'">Status: {{book.status}}</p> 
-            <p *ngIf="book.status == 'Approved'">Status: {{book.status}}</p> 
-            <p *ngIf="book.status == 'Declined'">Status: {{book.status}}</p> 
-
-          </ion-col>
-          <ion-col size="4">            
+          <ion-col size="12">
+            <p style="font-size: x-small; font-weight: bold;">Date: {{book.date | date}}</p>
+            <p style="font-size: x-small; font-weight: bold;">Time: {{book.time | date: 'H:mm'}}</p>
+            <p style="font-size: x-small; font-weight: bold;">Guests: {{book.guests}}</p>
+            <p style="font-size: x-small; font-weight: bold;">Seating Preference: {{book.preference}}</p>
+            <p style="font-size: x-small; font-weight: bold;">Mobile: +27{{book.mobile}}</p>
+            <p style="font-size: x-small; font-weight: bold;">Email: {{book.email}}</p>
+            <p *ngIf="book.status == 'Pending'" style="font-size: x-small; font-weight: bold;">Booking is: {{book.status}}</p> 
+            <p *ngIf="book.status == 'Approved'" style="font-size: x-small; font-weight: bold;">Booking is: {{book.status}}</p> 
+            <p *ngIf="book.status == 'Cancelled'" style="font-size: x-small; font-weight: bold;">Booking is: {{book.status}}</p> 
+            <p></p>
             <p (click)="status(book.ownerId, book.uid, 'Pending')"></p>
-            <ion-button (click)="status(book.ownerId, book.uid, 'Approved')" color="success" size="small" shape="round" name="selected">Confirm</ion-button>
-            <ion-button (click)="status(book.ownerId, book.uid, 'Declined')" color="danger" size="small" shape="round">Decline</ion-button>
+            <ion-button (click)="status(book.ownerId, book.uid, 'Approved')" color="success" size="small" name="selected">Confirm</ion-button>
+            <ion-button (click)="status(book.ownerId, book.uid, 'Cancelled')" color="danger" size="small">Cancel</ion-button>
           </ion-col>
         </ion-row>
       </ion-card-content>

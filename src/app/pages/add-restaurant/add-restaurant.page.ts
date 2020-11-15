@@ -45,9 +45,9 @@ export class AddRestaurantPage implements OnInit {
 
   addRestaurant() {
     this.addRestaurantForm = this.fb.group({
-      resName: ['', Validators.required],
-      phone: ['', [ Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern('^[0-9]+$')]],
-      email: ['', [Validators.required, Validators.email]],
+      resName: ['', [Validators.required, Validators.maxLength(100)]],
+      phone: ['', [ Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern('^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-s./0-9]*$')]],
+      email: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9._%-]+@[a-zA-Z0-9.0]+.[a-zA-Z]{2,4}$')]],
       website: ['', Validators.required],
       imgUrl: ['', Validators.required],
       address: this.fb.array([this.addAddressGroup()]),
@@ -71,9 +71,9 @@ export class AddRestaurantPage implements OnInit {
 
   addAddressGroup() {
     return this.fb.group({
-      street: ['', Validators.required],
-      city: ['', Validators.required],
-      province: ['', Validators.required],
+      street: ['', [Validators.required, Validators.maxLength(100)]],
+      city: ['', [Validators.required, Validators.maxLength(100)]],
+      province: ['', [Validators.required, Validators.maxLength(100)]],
       zipCode: ['', [Validators.required, Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')]]
     });
   }
@@ -108,22 +108,52 @@ export class AddRestaurantPage implements OnInit {
   get email() {
     return this.addRestaurantForm.get("email");
   }
+  get street() {
+    return this.addRestaurantForm.get("address.street");
+  }
+  get city() {
+    return this.addRestaurantForm.get("address.city");
+  }
+  get province() {
+    return this.addRestaurantForm.get("address.province");
+  }
+  get zipCode() {
+    return this.addRestaurantForm.get("address.zipCode");
+  }
 
   public errorMessages = {
     resName: [
       { type: 'required', message: 'Name is required' },
-      { type: 'maxLength', message: 'Name cannot be longer than 100 characters' }
+      { type: 'maxlength', message: 'Name cannot be longer than 100 characters' }
     ],
     email: [
       { type: 'required', message: 'Email is required' },
       { type: 'pattern', message: 'Please provide valid email.' }
     ],
     phone: [
-      { type: 'required', message: 'Phone number is required.' },
+      { type: 'required', message: 'Mobile number is required.' },
+      { type: 'minlength', message: 'Mobile number cannot be less than 10 digits.' },
+      { type: 'maxlength', message: 'Mobile number cannot be more than 10 digits.' },
       { type: 'pattern', message: 'Only numerical values allowed.' }
     ],
     imgUrl: [
       { type: 'required', message: 'Image is required.' }
+    ],
+    street: [
+      { type: 'required', message: 'Street name is required' },
+      { type: 'maxlength', message: 'Street name cannot be longer than 100 characters' }
+    ],
+    city: [
+      { type: 'required', message: 'City name is required' },
+      { type: 'maxlength', message: 'City name cannot be longer than 100 characters' }
+    ],
+    province: [
+      { type: 'required', message: 'Province name is required' },
+      { type: 'maxlength', message: 'Province name cannot be longer than 100 characters' }
+    ],
+    zipCode: [
+      { type: 'required', message: 'Zip code is required' },
+      { type: 'pattern', message: 'Please enter a valid zip coe' }
     ]
   }
 
@@ -161,38 +191,7 @@ export class AddRestaurantPage implements OnInit {
       ]
     });
     return await alert.present();
-
     
-
-    // .then(function(docRef){
-    //   console.log("Document written with ID: ", docRef);
-    // }).catch(function(error){
-    //   console.log(error);
-    // });
-    // this.nav.navigateRoot('/profile')
-    // this.addRestaurantForm.reset();
-
-    // this.restaurantService.registerRestaurant().doc(user.uid).add({
-    //   resName: this.addRestaurantForm.value.resName,
-    //   phone: this.addRestaurantForm.value.phone,
-    //   email: this.addRestaurantForm.value.email,
-    //   website: this.addRestaurantForm.value.website,
-    //   imgUrl: this.addRestaurantForm.value.imgUrl,
-    //   address: this.addRestaurantForm.value.address
-    // }).then((res) => {
-    //   console.log('data: ' +res);
-    // });
-
-    // firebase.database().ref('restaurants/' + user.uid).push().set({
-    //   resName: this.addRestaurantForm.value.resName,
-    //   phone: this.addRestaurantForm.value.phone,
-    //   email: this.addRestaurantForm.value.email,
-    //   website: this.addRestaurantForm.value.website,
-    //   address: this.addRestaurantForm.value.address
-      
-    // }).then((res) => {
-    //   console.log('data: ' + res);
-    // });
   }
 
 }

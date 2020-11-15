@@ -1,5 +1,5 @@
 {
-  "appId": "io.ionic.starter",
+  "appId": "com.restaurant-owner.ionic-angular",
   "appName": "restaurant-owner",
   "bundledWebRuntime": false,
   "npmClient": "npm",

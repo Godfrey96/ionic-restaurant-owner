@@ -35,8 +35,8 @@ export class SignupPage implements OnInit {
   addOwner() {
     this.ownerForm = this.fb.group({
       name: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      mobile: ['',  [ Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern('^[0-9]+$')]],
+      email: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9._%-]+@[a-zA-Z0-9.0]+.[a-zA-Z]{2,4}$')]],
+      mobile: ['',  [ Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern('^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-s./0-9]*$')]],
       password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(10)]]
     });
   }
@@ -72,10 +72,14 @@ export class SignupPage implements OnInit {
     ],
     mobile: [
       { type: 'required', message: 'Mobile number is required.' },
+      { type: 'minlength', message: 'Mobile number cannot be less than 10 digits.' },
+      { type: 'maxlength', message: 'Mobile number cannot be more than 10 digits.' },
       { type: 'pattern', message: 'Only numerical values allowed.' }
     ],
     password: [
-      { type: 'required', message: 'Password is required.' }
+      { type: 'required', message: 'Password is required.' },
+      { type: 'minlength', message: 'Password cannot be less than 5 characters.' },
+      { type: 'maxlength', message: 'Password cannot be more than 10 characters.' }
     ]
   }
 

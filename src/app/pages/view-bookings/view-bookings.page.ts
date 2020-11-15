@@ -26,7 +26,7 @@ export class ViewBookingsPage implements OnInit {
     console.log('user: ', user)
 
     //Fetching restaurants bookings
-    this.restaurantService.getAllBookings().doc(user).collection('bookings').where('ownerId', '==', user).orderBy('date', 'desc').onSnapshot(res => {
+    this.restaurantService.getAllBookings().doc(user).collection('bookings').where('ownerId', '==', user).orderBy('createdAt', 'desc').onSnapshot(res => {
       res.forEach(element => {
         this.booking.push(Object.assign( element.data(), {uid:element.id}) );
         console.log('uuu: ' + {uid:element.id})

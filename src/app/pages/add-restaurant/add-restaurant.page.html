@@ -25,19 +25,19 @@
           <ion-input formControlName="resName" style="margin-bottom: 10px;" type="text" placeholder="Restaurant Name"></ion-input>
           <div *ngFor="let error of errorMessages.resName">
             <ng-container *ngIf="resName.hasError(error.type) && (resName.dirty || resName.touched)">
-              <small style="color: red;" class="error-message">{{error.message}}</small>
+              <small class="error-message">{{error.message}}</small>
             </ng-container>
           </div>
           <ion-input formControlName="phone" style="margin-bottom: 10px;" type="text" placeholder="Phone"></ion-input>
           <div *ngFor="let error of errorMessages.phone">
             <ng-container *ngIf="phone.hasError(error.type) && (phone.dirty || phone.touched)">
-              <small style="color: red;" class="error-message">{{error.message}}</small>
+              <small class="error-message">{{error.message}}</small>
             </ng-container>
           </div>
           <ion-input formControlName="email" style="margin-bottom: 10px;" type="email" placeholder="Email"></ion-input>
           <div *ngFor="let error of errorMessages.email">
             <ng-container *ngIf="email.hasError(error.type) && (email.dirty || email.touched)">
-              <small style="color: red;" class="error-message">{{error.message}}</small>
+              <small class="error-message">{{error.message}}</small>
             </ng-container>
           </div>
           <ion-input formControlName="website" style="margin-bottom: 10px;" type="text" placeholder="Website"></ion-input>
@@ -45,7 +45,7 @@
           <!-- <ion-input type="file" formControlName="imgUrl" accept="image/*" (change)="onFileSelected($event)" style="margin-bottom: 10px;" type="text" placeholder="Restaurant Image"></ion-input> -->
           <div *ngFor="let error of errorMessages.imgUrl">
             <ng-container *ngIf="imgUrl.hasError(error.type) && (imgUrl.dirty || imgUrl.touched)">
-              <small style="color: red;" class="error-message">{{error.message}}</small>
+              <small class="error-message">{{error.message}}</small>
             </ng-container>
           </div>
 
@@ -75,23 +75,39 @@
 
               <ion-row>
                 <ion-col>
-                  <ion-input formControlName="street" style="margin-bottom: 10px;" type="text"
-                    placeholder="Street Address"></ion-input>
+                  <ion-input formControlName="street" style="margin-bottom: 10px;" type="text" placeholder="Street Address"></ion-input>
+                  <div *ngFor="let error of errorMessages.street">
+                    <ng-container *ngIf="street.hasError(error.type) && (street.dirty || street.touched)">
+                      <small class="error-message">{{error.message}}</small>
+                    </ng-container>
+                  </div>
                 </ion-col>
               </ion-row>
 
               <ion-row>
                 <ion-col size="4">
-                  <ion-input formControlName="city" style="margin-bottom: 10px;" type="text"
-                    placeholder="City"></ion-input>
+                  <ion-input formControlName="city" style="margin-bottom: 10px;" type="text" placeholder="City"></ion-input>
+                  <div *ngFor="let error of errorMessages.city">
+                    <ng-container *ngIf="city.hasError(error.type) && (city.dirty || city.touched)">
+                      <small class="error-message">{{error.message}}</small>
+                    </ng-container>
+                  </div>
                 </ion-col>
                 <ion-col size="4">
-                  <ion-input formControlName="province" style="margin-bottom: 10px;" type="text"
-                    placeholder="Province"></ion-input>
+                  <ion-input formControlName="province" style="margin-bottom: 10px;" type="text" placeholder="Province"></ion-input>
+                  <div *ngFor="let error of errorMessages.province">
+                    <ng-container *ngIf="province.hasError(error.type) && (province.dirty || province.touched)">
+                      <small class="error-message">{{error.message}}</small>
+                    </ng-container>
+                  </div>
                 </ion-col>
                 <ion-col size="4">
-                  <ion-input formControlName="zipCode" style="margin-bottom: 10px;" type="text"
-                    placeholder="Zip Code"></ion-input>
+                  <ion-input formControlName="zipCode" style="margin-bottom: 10px;" type="text" placeholder="Zip Code"></ion-input>
+                  <div *ngFor="let error of errorMessages.zipCode">
+                    <ng-container *ngIf="zipCode.hasError(error.type) && (zipCode.dirty || zipCode.touched)">
+                      <small class="error-message">{{error.message}}</small>
+                    </ng-container>
+                  </div>
                 </ion-col>
               </ion-row>
 

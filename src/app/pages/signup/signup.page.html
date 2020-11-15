@@ -24,25 +24,25 @@
         <ion-input formControlName="name" style="margin-bottom: 10px;" type="text" placeholder="First and Last name"></ion-input>
         <div *ngFor="let error of errorMessages.name">
           <ng-container *ngIf="name.hasError(error.type) && (name.dirty || name.touched) || isSubmitted">
-            <small style="color: red;" class="error-message">{{error.message}}</small>
+            <small class="error-message">{{error.message}}</small>
           </ng-container>
         </div>
         <ion-input formControlName="email" style="margin-bottom: 10px;" type="email" placeholder="Email"></ion-input>
         <div *ngFor="let error of errorMessages.email">
           <ng-container *ngIf="email.hasError(error.type) && (email.dirty || email.touched) || isSubmitted">
-            <small style="color: red;" class="error-message">{{error.message}}</small>
+            <small class="error-message">{{error.message}}</small>
           </ng-container>
         </div>
         <ion-input formControlName="mobile" style="margin-bottom: 10px;" type="text" placeholder="Mobile"></ion-input>
         <div *ngFor="let error of errorMessages.mobile">
           <ng-container *ngIf="mobile.hasError(error.type) && (mobile.dirty || mobile.touched) || isSubmitted">
-            <small style="color: red;" class="error-message">{{error.message}}</small>
+            <small class="error-message">{{error.message}}</small>
           </ng-container>
         </div>
         <ion-input formControlName="password" style="margin-bottom: 10px;" type="password" placeholder="Password"></ion-input>
         <div *ngFor="let error of errorMessages.password">
           <ng-container *ngIf="password.hasError(error.type) && (password.dirty || password.touched) || isSubmitted">
-            <small style="color: red;" class="error-message">{{error.message}}</small>
+            <small class="error-message">{{error.message}}</small>
           </ng-container>
         </div>
 

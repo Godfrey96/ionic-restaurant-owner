@@ -32,8 +32,8 @@ export class SigninPage implements OnInit {
   }
   loginOwner(){
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required]
+      email: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9._%-]+@[a-zA-Z0-9.0]+.[a-zA-Z]{2,4}$')]],
+      password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(10)]]
     });
   }
 
@@ -51,7 +51,9 @@ export class SigninPage implements OnInit {
       { type: 'pattern', message: 'Please provide valid email.' }
     ],
     password: [
-      { type: 'required', message: 'Password is required.' }
+      { type: 'required', message: 'Password is required.' },
+      { type: 'minlength', message: 'Password cannot be less than 5 characters.' },
+      { type: 'maxlength', message: 'Password cannot be more than 10 characters.' }
     ]
   }
 
