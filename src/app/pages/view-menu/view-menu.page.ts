@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/database';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-view-menu',
@@ -13,7 +14,9 @@ import 'firebase/database';
 export class ViewMenuPage implements OnInit {
 
   id: any;
+  menuId: any;
   menu: any;
+  menus: Array<any> = [];
 
   constructor(
               private activatedRoute: ActivatedRoute,
@@ -29,7 +32,17 @@ export class ViewMenuPage implements OnInit {
     let user = firebase.auth().currentUser.uid
     console.log('user: ', user)
 
+    // fetching all menus
+    firebase.firestore().collection('restaurants').doc(user).collection('menu').where('ownerId', '==' , user).onSnapshot(res => {
+      res.forEach(element => {
+        this.menus.push(Object.assign( element.data(), {uid:element.id}) );
+        this.menuId = {uid:element.id}
+        console.log('MenudId: ', this.menuId)
+      });
+    });
+
     // fetching single menu
+    // .where('ownerId', '==', this.id)
     firebase.firestore().collection('restaurants').doc(this.id).collection('menu').where('ownerId', '==', this.id).get().then(snapshot => {
       this.menu = snapshot;
       console.log('new data: ', this.menu)
