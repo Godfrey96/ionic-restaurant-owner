@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { AlertController, NavController, LoadingController } from '@ionic/angular';
+import { AlertController, NavController, LoadingController, ToastController } from '@ionic/angular';
 
 import { AuthService } from '../../services/auth.service';
+
+import firebase from 'firebase/app';
+import 'firebase/firestore';
+import 'firebase/auth';
 
 @Component({
   selector: 'app-signin',
@@ -14,19 +18,33 @@ export class SigninPage implements OnInit {
   loginForm: FormGroup;
   isSubmitted: boolean = false;
   spin: boolean = false;
+  owners: any;
+  name: any;
 
   constructor(
               public nav: NavController,
               public loadingCtrl: LoadingController,
               private fb: FormBuilder,
               private authService: AuthService,
-              private alertCtrl: AlertController
+              private alertCtrl: AlertController,
+              public toastCtrl: ToastController
             ) { 
               // this.authService.getSession();
             }
 
   ngOnInit() {
     // this.authService.signAuth();
+
+    // let user = firebase.auth().currentUser.uid
+    // console.log('user: ', user)
+
+    // //Getting logged owner
+    // firebase.firestore().collection('owners').doc(user).get().then(snapshot => {
+    //   this.owners = snapshot.data();
+    //   this.name = snapshot.get('name');
+    //   console.log('new data: ', this.owners)
+    // })
+
     this.loginOwner();
     
   }
@@ -67,12 +85,36 @@ export class SigninPage implements OnInit {
 
     this.authService.signinOwner(this.loginForm.value.email, this.loginForm.value.password).then((res) => {
       console.log(res.user);
+
+      //Getting logged in owner
+      let user = firebase.auth().currentUser.uid
+      console.log('user: ', user)
+      firebase.firestore().collection('owners').doc(user).get().then(async snapshot => {
+        this.owners = snapshot.data();
+        this.name = snapshot.get('name');
+        console.log('name: ', this.name)
+        console.log('new data: ', this.owners)
+
+        const toast = await this.toastCtrl.create({
+          message: "Welcome " + this.name,
+          duration: 3000
+        });
+        toast.present();
+
+      })
+
     }).then(() => {
+
       loading.dismiss().then(() => {
         this.nav.navigateRoot('/dashboard');
       });
     },
-    error => {
+    async error => {
+      const toast = await this.toastCtrl.create({
+        message: error.message,
+        duration: 3000
+      });
+      toast.present();
       loading.dismiss().then(() => {
         console.log(error);
       });

@@ -16,10 +16,30 @@
     </div>
 
     <ion-card *ngFor="let book of booking">
-      <ion-card-title style="margin-left: 18px; font-size: small;">
+
+      <ion-row>
+        <ion-col size="7">
+          <ion-button class="ion-icon-left" fill="clear" size="small" color="danger">
+            <small style="text-transform: capitalize; font-size: small;"><b>{{book.firstName}} {{book.lastName}}</b> </small>
+         </ion-button>
+          <!-- <ion-card-title style="margin-left: 18px; font-size: small;">
+            <b>{{book?.resName}}</b>'s Restaurant
+          </ion-card-title> -->
+        </ion-col>
+        <ion-col size="1">
+          
+        </ion-col>
+        <ion-col size="4">
+          <ion-button class="ion-icon-left" fill="clear" size="small" color="danger">
+            <small style="text-transform: initial;">{{ ago(book.createdAt.toDate()) }} ago </small>
+         </ion-button>
+        </ion-col>
+      </ion-row>
+
+      <!-- <ion-card-title style="margin-left: 18px; font-size: small;">
         {{book.firstName}} {{book.lastName}} - <b style="font-size: 9px;">{{book?.createdAt.toDate() | date}} - {{book?.createdAt.toDate() | date: 'H:mm'}}</b>
-      </ion-card-title>
-      <ion-card-content>
+      </ion-card-title> -->
+      <!-- <ion-card-content> -->
       
         <ion-grid>
           <ion-row>
@@ -46,7 +66,7 @@
             <ion-button style="text-transform: capitalize;" (click)="status(book.ownerId, book.uid, 'Cancelled')" color="danger" size="small">Cancel</ion-button>
           </ion-col>
         </ion-row>
-      </ion-card-content>
+      <!-- </ion-card-content> -->
     </ion-card>
 
   </div>
