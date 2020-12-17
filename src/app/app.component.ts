@@ -31,17 +31,9 @@ export class AppComponent {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    private menu: MenuController,
-    private authService: AuthService,
-    private nav: NavController
   ) {
     this.initializeApp();
     firebase.initializeApp(firebaseConfig);
-  }
-
-  openCustom() {
-    this.menu.enable(true, 'custom');
-    this.menu.open('custom');
   }
 
   initializeApp() {
@@ -51,9 +43,4 @@ export class AppComponent {
     });
   }
 
-  logout(){
-    this.authService.logoutOwner();
-    this.authService.signAuth();
-    this.nav.navigateRoot('/signin')
-  }
 }

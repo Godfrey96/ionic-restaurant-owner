@@ -13,13 +13,12 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class ProfilePage implements OnInit {
 
-  // ownerId: any;
-  // restaurants: Array<any>;
   restaurants: any;
+  restaurantLists: Array<any> = [];
   show = false;
-  //content = 'addRest';
-  // array: any;
+
   x: any;
+  restId: any;
 
   constructor(
     private authService: AuthService,
@@ -27,26 +26,36 @@ export class ProfilePage implements OnInit {
     private nav: NavController
   ) { }
 
-  ngOnInit() { 
+  ngOnInit() {
     this.authService.signAuth();
 
     let user = firebase.auth().currentUser.uid
     console.log('user: ', user)
 
-    firebase.firestore().collection('restaurants').doc(user).get().then(snapshot => {
-      this.restaurants = snapshot.data();
-      //console.log('new data: ', this.restaurants)
-      if(user === 'ownerId'){
-        this.show = this.restaurants
-      }
-    })
+    //fetching all restaurants
+    firebase.firestore().collection('restaurants').onSnapshot(res => {
+      res.forEach(element => {
+        this.restaurantLists.push(Object.assign(element.data(), { uid: element.id }));
+        this.restId = { uid: element.id }.uid
+        console.log('rest id: ', this.restId)
+
+        // Fetching Restaurant by id
+        firebase.firestore().collection('restaurants').doc(this.restId).get().then(snapshot => {
+          this.restaurants = snapshot.data();
+          //console.log('new data: ', this.restaurants)
+          if (user === 'ownerId') {
+            this.show = this.restaurants
+          }
+        })
+
+      });
+    });
+    
   }
 
-  editRestaurant(){
+  editRestaurant() { }
 
-  }
-  
-  newRestaurant(){
+  newRestaurant() {
     this.nav.navigateRoot('/add-restaurant')
   }
 }

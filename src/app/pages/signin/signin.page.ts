@@ -89,7 +89,7 @@ export class SigninPage implements OnInit {
       //Getting logged in owner
       let user = firebase.auth().currentUser.uid
       console.log('user: ', user)
-      firebase.firestore().collection('owners').doc(user).get().then(async snapshot => {
+      firebase.firestore().collection('restaurantManagers').doc(user).get().then(async snapshot => {
         this.owners = snapshot.data();
         this.name = snapshot.get('name');
         console.log('name: ', this.name)
@@ -106,7 +106,7 @@ export class SigninPage implements OnInit {
     }).then(() => {
 
       loading.dismiss().then(() => {
-        this.nav.navigateRoot('/dashboard');
+        this.nav.navigateRoot('/tabs/dashboard');
       });
     },
     async error => {
@@ -121,26 +121,7 @@ export class SigninPage implements OnInit {
     }
     );
     return await loading.present();
-
-    // this.authService.signinOwner(this.loginForm.value.email, this.loginForm.value.password).then((res) => {
-    //   console.log(res.user);
-
-    //   if(res.user.uid){
-    //     this.nav.navigateRoot('/dashboard');
-    //   }else{
-    //     this.nav.navigateRoot('/add-restaurant');
-    //   }
-      
-    // })
-
-    // async error => {
-    //   const alert = await this.alertCtrl.create({
-    //     message: error.message,
-    //     buttons: [{ text: 'Ok', role: 'cancel' }],
-    //   });
-    //   await alert.present();
-    // }
-    //);
+    
   }
 
 }

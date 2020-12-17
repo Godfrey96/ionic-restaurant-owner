@@ -64,7 +64,8 @@ export class EditRestaurantPage implements OnInit {
       email: ['', Validators.required],
       website: ['', Validators.required],
       imgUrl: ['', Validators.required],
-      address: this.fb.array([this.addAddressGroup()]),
+      address: ['', Validators.required],
+      // address: this.fb.array([this.addAddressGroup()]),
     });
    }
 
@@ -83,26 +84,26 @@ export class EditRestaurantPage implements OnInit {
     };
   }
 
-  addAddressGroup() {
-    return this.fb.group({
-      street: ['', Validators.required],
-      city: ['', Validators.required],
-      province: ['', Validators.required],
-      zipCode: ['', [Validators.required, Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')]]
-    });
-  }
+  // addAddressGroup() {
+  //   return this.fb.group({
+  //     street: ['', Validators.required],
+  //     city: ['', Validators.required],
+  //     province: ['', Validators.required],
+  //     zipCode: ['', [Validators.required, Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')]]
+  //   });
+  // }
 
-  addAddress() {
-    this.addressArray.push(this.addAddressGroup());
-  }
+  // addAddress() {
+  //   this.addressArray.push(this.addAddressGroup());
+  // }
 
-  removeAddress(index) {
-    this.addressArray.removeAt(index);
-  }
+  // removeAddress(index) {
+  //   this.addressArray.removeAt(index);
+  // }
 
-  get addressArray() {
-    return <FormArray>this.editRestaurantForm.get('address');
-  }
+  // get addressArray() {
+  //   return <FormArray>this.editRestaurantForm.get('address');
+  // }
 
   // Method for updating the restaurant
   async editRes() {
@@ -118,7 +119,7 @@ export class EditRestaurantPage implements OnInit {
             var user = firebase.auth().currentUser
             this.ownerId = user.uid;
 
-            firebase.firestore().collection('restaurants').doc(this.ownerId).update({
+            firebase.firestore().collection('restaurants').doc(this.id).update({
               // onwerId: this.ownerId,
               resName: this.editRestaurantForm.value.resName,
               phone: this.editRestaurantForm.value.phone,

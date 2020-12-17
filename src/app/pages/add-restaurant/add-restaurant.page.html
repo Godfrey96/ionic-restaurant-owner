@@ -40,6 +40,12 @@
               <small class="error-message">{{error.message}}</small>
             </ng-container>
           </div>
+          <ion-input formControlName="address" style="margin-bottom: 10px;" type="text" placeholder="Address"></ion-input>
+          <div *ngFor="let error of errorMessages.address">
+            <ng-container *ngIf="address.hasError(error.type) && (address.dirty || address.touched)">
+              <small class="error-message">{{error.message}}</small>
+            </ng-container>
+          </div>
           <ion-input formControlName="website" style="margin-bottom: 10px;" type="text" placeholder="Website"></ion-input>
           <ion-input type="file" formControlName="imgUrl" accept="image/*" (change)="onFileSelected($event)"></ion-input>
           <!-- <ion-input type="file" formControlName="imgUrl" accept="image/*" (change)="onFileSelected($event)" style="margin-bottom: 10px;" type="text" placeholder="Restaurant Image"></ion-input> -->
@@ -49,7 +55,7 @@
             </ng-container>
           </div>
 
-          <ion-row formArrayName="address">
+          <!-- <ion-row formArrayName="address">
             <ion-col size="12" *ngFor="let group of addressArray.controls; let i = index;" [formGroupName]="i">
               <ion-row>
                 <ion-col size="8">
@@ -112,7 +118,7 @@
               </ion-row>
 
             </ion-col>
-          </ion-row>
+          </ion-row> -->
         </ion-list>
 
         <ion-button class="btnsignup" (click)="addRes()" fill="clear" *ngIf="!spin">

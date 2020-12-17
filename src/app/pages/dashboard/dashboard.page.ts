@@ -24,7 +24,7 @@ export class DashboardPage implements OnInit {
     console.log('user: ', user)
 
 
-    firebase.firestore().collection('owners').doc(user).get().then(snapshot => {
+    firebase.firestore().collection('restaurantManagers').doc(user).get().then(snapshot => {
       this.owners = snapshot.data();
       console.log('new data: ', this.owners)
     })

@@ -17,7 +17,7 @@ export class RestaurantService {
   constructor() { }
 
   // Add restaurant
-  registerRestaurant() {
+  AddRestaurant() {
     return firebase.firestore().collection('restaurants');
   }
 

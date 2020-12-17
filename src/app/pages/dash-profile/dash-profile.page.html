@@ -1,0 +1,58 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="tabs/dashboard"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Profile</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="header">
+
+    <h1 style="color: #ffff;">Profile</h1> -->
+    <h5 style="color: #ffff; font-size: medium; margin-top: 50px;">Welcome Mogau</h5>
+
+    <!-- <ion-avatar>
+      <img src="assets/user.jpg">
+    </ion-avatar>
+    <ion-fab class="camera">
+      <ion-fab-button>
+        <ion-icon color="dark" name="camera-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab> -->
+
+
+    <!-- <ion-item class="event">
+      <ion-label>10 <br> Events</ion-label>
+      <ion-label>15 <br>Followers</ion-label>
+    </ion-item> -->
+
+  </div>
+
+  <div class="container" style="margin-top: 30px;">
+
+    <ion-item>
+      <ion-icon name="person-outline"></ion-icon>
+      <ion-label style="font-weight: bold;">Account</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>My Profile</ion-label>
+      <ion-icon name="chevron-forward-outline"></ion-icon>
+    </ion-item>
+    <ion-item routerLink="/profile">
+      <ion-label>My Restaurant</ion-label>
+      <ion-icon name="chevron-forward-outline"></ion-icon>
+    </ion-item>
+    <ion-item routerLink="/menu">
+      <ion-label>Meals</ion-label>
+      <ion-icon name="chevron-forward-outline"></ion-icon>
+    </ion-item>
+
+    <ion-item lines="none" style="color: red;" (click)="logout()">
+      <ion-icon name="log-out-outline" color="danger"></ion-icon>
+      Sign Out
+    </ion-item>
+  </div>
+
+</ion-content>

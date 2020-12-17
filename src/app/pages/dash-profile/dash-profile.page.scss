@@ -1,0 +1,47 @@
+
+ion-toolbar{
+    --background: #101045;
+    color: whitesmoke;
+}
+
+h1,h5{
+    margin-left: 10px;
+}
+
+.header{
+    background-color: #101045;
+    margin-top: -5%;
+    padding-top: 5%;
+    padding-bottom: 2%;
+    padding-left: 5%;
+    padding-right: 40%;
+}
+.event{
+    margin-top: 15%;
+}
+ion-avatar{
+    width: 100px;
+    height: 100px;
+    margin-left: 90%;
+    margin-top: -30%;
+}
+
+.file{
+    margin-bottom: 80%;
+    margin-left: 75%;
+}
+
+ion-fab-button{
+    height: 40px;
+    width: 40px;
+    --background: #ffffff
+}
+
+.camera{
+    margin-top: -8%;
+    margin-left: 66%;
+}
+
+ion-card{
+    position: absolute;
+}

@@ -96,8 +96,10 @@ export class SignupPage implements OnInit {
             this.isSubmitted = true;
             if(this.ownerForm.valid){
               this.authService.signupOwner(this.ownerForm.value.email, this.ownerForm.value.password).then((res) => {
-                return firebase.firestore().collection('owners').doc(res.user.uid).set({
+                return firebase.firestore().collection('restaurantManagers').doc(res.user.uid).set({
                   name: this.ownerForm.value.name,
+                  email: this.ownerForm.value.email,
+                  password: this.ownerForm.value.password,
                   mobile: this.ownerForm.value.mobile
                 }).then(() => {
                   console.log(res.user);
@@ -108,15 +110,12 @@ export class SignupPage implements OnInit {
               })
             }else{
               console.log('Invalid field')
-            }
-            
+            }    
           }
         },
       ]
-
     });
     return await alert.present();
-
   }
 
 }

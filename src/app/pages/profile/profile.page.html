@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="dashboard"></ion-back-button>
+      <ion-back-button defaultHref="tabs/dashboard"></ion-back-button>
     </ion-buttons>
     <ion-title>Profile</ion-title>
   </ion-toolbar>
@@ -18,7 +18,7 @@
         <img style="width: 90%; height: 150px; margin-left: 18px; margin-top: 10px;" src="{{restaurants?.imgUrl}}" alt="">
       </div>
       <div class="editRes">
-        <ion-button size="small" [routerLink]="'/edit-restaurant/' +restaurants?.ownerId">Edit Profile</ion-button>
+        <ion-button size="small" [routerLink]="'/edit-restaurant/' +restaurants?.restId">Edit Profile</ion-button>
       </div>
   
       <div class="cont-1">
@@ -54,7 +54,7 @@
     
           <ion-item>
             <p style="font-size: 12px; font-weight: 600;">Address:
-              {{restaurants?.address[0].city }}
+              {{restaurants?.address }}
             </p>    
           </ion-item>
         </ion-grid>
