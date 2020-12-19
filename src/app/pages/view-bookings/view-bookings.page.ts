@@ -17,6 +17,8 @@ export class ViewBookingsPage implements OnInit {
 
   booking: Array<any> = [];
   disableButton: boolean = false;
+  restaurants: Array<any> = [];
+  restId: any;
 
   constructor(
               public loadingCtrl: LoadingController,
@@ -32,19 +34,26 @@ export class ViewBookingsPage implements OnInit {
     let user = firebase.auth().currentUser.uid
     console.log('user: ', user)
 
-    //Fetching restaurants bookings
-    this.restaurantService.getAllBookings().doc(user).collection('bookings').where('ownerId', '==', user).orderBy('createdAt', 'desc').onSnapshot(res => {
+    //fetching all restaurants
+    firebase.firestore().collection('restaurants').onSnapshot(res => {
       res.forEach(element => {
-        this.booking.push(Object.assign( element.data(), {uid:element.id}) );
-        console.log('uuu: ' + {uid:element.id})
-        console.log('u: ' + element.id)
-      })
-    })
+        this.restaurants.push(Object.assign(element.data(), {uid:element.id}));
+        this.restId = {uid:element.id}.uid;
+
+        firebase.firestore().collection('restaurants').doc(this.restId).collection('bookings').where('restId', '==', this.restId).orderBy('createdAt', 'desc').onSnapshot(res => {
+          res.forEach(doc => {
+            this.booking.push(Object.assign(doc.data(), {uid:doc.id}))
+            console.log('DI BOOKINGS: ', this.booking)
+          })
+        })
+
+      });
+    });
   }
 
   //Booking status
-  status(ownerId, userId, status){
-    this.restaurantService.bookingStatus(ownerId, userId, status);
+  status(restId, bookId, status){
+    this.restaurantService.bookingStatus(restId, bookId, status);
     // this.disableButton = true;
   }
 

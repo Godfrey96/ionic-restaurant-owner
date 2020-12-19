@@ -25,12 +25,12 @@ export class RestaurantService {
     return firebase.firestore().collection('restaurants');
   }
 
-  bookingStatus(ownerId, userId, value){
+  bookingStatus(restId, bookId, value){
     var db = firebase.firestore();
-    var restaurantRef = db.collection('restaurants').doc(ownerId);
+    var restaurantRef = db.collection('restaurants').doc(restId);
 
     var restaurant = Promise.all([
-      restaurantRef.collection('bookings').doc(userId).set({
+      restaurantRef.collection('bookings').doc(bookId).set({
         status: value
         // userId: userId
       }, { merge: true }).then(a => {

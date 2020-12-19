@@ -49,10 +49,10 @@ const routes: Routes = [
     path: 'profile',
     loadChildren: () => import('./pages/profile/profile.module').then( m => m.ProfilePageModule)
   },
-  // {
-  //   path: 'view-bookings',
-  //   loadChildren: () => import('./pages/view-bookings/view-bookings.module').then( m => m.ViewBookingsPageModule)
-  // },
+  {
+    path: 'view-bookings',
+    loadChildren: () => import('./pages/view-bookings/view-bookings.module').then( m => m.ViewBookingsPageModule)
+  },
   {
     path: 'edit-restaurant/:id',
     loadChildren: () => import('./pages/edit-restaurant/edit-restaurant.module').then( m => m.EditRestaurantPageModule)
