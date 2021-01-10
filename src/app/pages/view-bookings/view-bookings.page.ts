@@ -19,6 +19,7 @@ export class ViewBookingsPage implements OnInit {
   disableButton: boolean = false;
   restaurants: Array<any> = [];
   restId: any;
+  bookingSize: any;
 
   constructor(
               public loadingCtrl: LoadingController,
@@ -40,9 +41,11 @@ export class ViewBookingsPage implements OnInit {
         this.restaurants.push(Object.assign(element.data(), {uid:element.id}));
         this.restId = {uid:element.id}.uid;
 
-        firebase.firestore().collection('restaurants').doc(this.restId).collection('bookings').where('restId', '==', this.restId).orderBy('createdAt', 'desc').onSnapshot(res => {
+        firebase.firestore().collection('restaurants').doc(this.restId).collection('bookings').where('restId', '==', this.restId).orderBy('createdAt', 'desc').where('resManagerId', '==', user).onSnapshot(res => {
           res.forEach(doc => {
             this.booking.push(Object.assign(doc.data(), {uid:doc.id}))
+            this.bookingSize = (this.booking).length
+            console.log('booking size: ', this.bookingSize)
             console.log('DI BOOKINGS: ', this.booking)
           })
         })

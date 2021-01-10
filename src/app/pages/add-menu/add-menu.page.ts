@@ -38,6 +38,11 @@ export class AddMenuPage implements OnInit {
   }
 
   ngOnInit() {
+
+    var user = firebase.auth().currentUser
+    this.ownerId = user.uid;
+    console.log('owner Idd - ngonit: ', this.ownerId)
+
     this.addDish();
   }
 
@@ -72,17 +77,20 @@ export class AddMenuPage implements OnInit {
 
     var user = firebase.auth().currentUser
     this.ownerId = user.uid;
+    console.log('owner Idd: ', this.ownerId)
 
-    //fetching all restaurants
-    firebase.firestore().collection('restaurants').onSnapshot(res => {
+
+      //fetching all restaurants
+    firebase.firestore().collection('restaurants').where('ownerId', '==', this.ownerId).onSnapshot(res => {
       res.forEach(async element => {
         this.restaurantLists.push(Object.assign(element.data(), { uid: element.id }));
         this.restId = { uid: element.id }.uid
         console.log('rest id: ', this.restId)
 
-        // Adding new menu
+          // Adding new menu
         firebase.firestore().collection('restaurants').doc(this.restId).collection('menu').add({
           ownerId: this.ownerId,
+          restId: this.restId,
           name: this.addMenuForm.value.name,
           price: this.addMenuForm.value.price,
           description: this.addMenuForm.value.description,
@@ -109,6 +117,7 @@ export class AddMenuPage implements OnInit {
 
       });
     });
+
     
   }
 

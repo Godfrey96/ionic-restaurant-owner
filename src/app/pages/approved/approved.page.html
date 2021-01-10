@@ -1,9 +1,9 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="tabs/dashboard"></ion-back-button>
+      <ion-back-button defaultHref="dashboard"></ion-back-button>
     </ion-buttons>
-    <ion-title>Bookings</ion-title>
+    <ion-title>Approved Bookings</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -11,11 +11,12 @@
 
   <div class="content">
 
-    <!-- <div class="cont-2">
-      <h2 style=" margin-bottom: 10px;"><b>View Bookings</b></h2>
-    </div> -->
-    <p *ngIf="booking.length > 0"></p>
-    <ion-card *ngFor="let book of booking">
+    <div class="cont-2">
+      <!-- <h2 style=" margin-bottom: 10px;"><b>View Bookings</b></h2> -->
+    </div>
+
+    <p *ngIf="ApprovedBooking.length > 0"></p>
+    <ion-card *ngFor="let book of ApprovedBooking">
       <ion-row>
         <ion-col size="7">
           <ion-button class="ion-icon-left" fill="clear" size="small" color="danger">
@@ -26,8 +27,8 @@
           </ion-card-title> -->
         </ion-col>
         <ion-col size="1">
+          
         </ion-col>
-
         <ion-col size="4">
           <ion-button class="ion-icon-left" fill="clear" size="small" color="danger">
             <small style="text-transform: initial;">{{ ago(book.createdAt.toDate()) }} ago </small>
@@ -60,15 +61,15 @@
             <p *ngIf="book.status == 'Approved'" style="font-size: x-small; font-weight: bold;">Booking is: {{book.status}}</p> 
             <p *ngIf="book.status == 'Cancelled'" style="font-size: x-small; font-weight: bold;">Booking is: {{book.status}}</p> 
             <p></p>
-            <p (click)="status(book.restId, book.uid, 'Pending')"></p>
+            <!-- <p (click)="status(book.restId, book.uid, 'Pending')"></p>
             <ion-button style="text-transform: capitalize;" (click)="status(book.restId, book.uid, 'Approved')" color="success" size="small" name="selected">Confirm</ion-button>
-            <ion-button style="text-transform: capitalize;" (click)="status(book.restId, book.uid, 'Cancelled')" color="danger" size="small">Cancel</ion-button>
+            <ion-button style="text-transform: capitalize;" (click)="status(book.restId, book.uid, 'Cancelled')" color="danger" size="small">Cancel</ion-button> -->
           </ion-col>
         </ion-row>
       <!-- </ion-card-content> -->
     </ion-card>
-    <p style="text-align: center;" class="info-text mat-body-1 center" *ngIf="booking.length <= 0">
-      No available bookings yet!
+    <p style="text-align: center;" class="info-text mat-body-1 center" *ngIf="ApprovedBooking.length <= 0">
+      No Approved Bookings yet!
     </p>
 
   </div>

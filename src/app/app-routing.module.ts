@@ -69,6 +69,26 @@ const routes: Routes = [
     path: 'tabs',
     loadChildren: () => import('./tabs/tabs.module').then( m => m.TabsPageModule)
   },
+  {
+    path: 'reviews',
+    loadChildren: () => import('./pages/reviews/reviews.module').then( m => m.ReviewsPageModule)
+  },
+  {
+    path: 'pending',
+    loadChildren: () => import('./pages/pending/pending.module').then( m => m.PendingPageModule)
+  },
+  {
+    path: 'approved',
+    loadChildren: () => import('./pages/approved/approved.module').then( m => m.ApprovedPageModule)
+  },
+  {
+    path: 'cancelled',
+    loadChildren: () => import('./pages/cancelled/cancelled.module').then( m => m.CancelledPageModule)
+  },
+  {
+    path: 'user-profile',
+    loadChildren: () => import('./pages/user-profile/user-profile.module').then( m => m.UserProfilePageModule)
+  },
   // {
   //   path: 'dash-profile',
   //   loadChildren: () => import('./pages/dash-profile/dash-profile.module').then( m => m.DashProfilePageModule)

@@ -1,22 +1,92 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-    <ion-title>Dashboard</ion-title>
-  </ion-toolbar>
-</ion-header>
 
 <ion-content>
 
-  <section class="ion-text-center ion-padding">
-    <ion-icon style="font-size: 50px;" name="person"></ion-icon>
-    <h6 style="font-size: 1.4em;">Welcome, <b>{{owners?.name}}</b> <br>
-    </h6>
-  </section>
+  <ion-grid style="margin-top: 50px;">
 
-  <ion-grid>
     <ion-row>
+      <ion-col size="12">
+        <h4 style="font-size: 1.2em;">
+          Hello, <b>{{owners?.name}}</b> <br>
+        </h4>
+      </ion-col>
+    </ion-row>
+
+    <ion-row style="margin-top: 20px;">
+      <ion-col size="6">
+        <ion-card routerLink="/view-bookings">
+          <ion-card-header style="text-align: center;">
+            <ion-card-title>Bookings</ion-card-title>
+          </ion-card-header>
+
+          <ion-card-content>
+            <h4 style="text-align: center;">{{ this.bookingSize }}</h4>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+
+      <ion-col size="6">
+        <ion-card routerLink="/reviews">
+          <ion-card-header style="text-align: center;">
+            <ion-card-title>Reviews</ion-card-title>
+          </ion-card-header>
+
+          <ion-card-content>
+            <h4 style="text-align: center;">{{ this.reviewSize }}</h4>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="6">
+        <ion-card routerLink="/pending">
+          <ion-card-header style="text-align: center;">
+            <ion-card-title>Pending</ion-card-title>
+          </ion-card-header>
+
+          <ion-card-content>
+            <h4 style="text-align: center;">{{ this.pendingSize }}</h4>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+
+      <ion-col size="6">
+        <ion-card routerLink="/approved">
+          <ion-card-header style="text-align: center;">
+            <ion-card-title>Approved</ion-card-title>
+          </ion-card-header>
+
+          <ion-card-content>
+            <h4 style="text-align: center;">{{ this.approvedSize }}</h4>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="6">
+        <ion-card routerLink="/cancelled">
+          <ion-card-header style="text-align: center;">
+            <ion-card-title>Cancelled</ion-card-title>
+          </ion-card-header>
+
+          <ion-card-content>
+            <h4 style="text-align: center;">{{ this.cancelledSize }}</h4>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+
+      <ion-col size="6">
+        <!-- <ion-card>
+          <ion-card-header style="text-align: center;">
+            <ion-card-title>Reviews</ion-card-title>
+          </ion-card-header>
+
+          <ion-card-content>25</ion-card-content>
+        </ion-card> -->
+      </ion-col>
+    </ion-row>
+    <!-- <ion-row>
       <ion-col size="12">
         <ion-card class="ion-text-center ion-padding" color="danger"  routerLink="/profile">
           <ion-icon style="font-size: 50px;" name="person"></ion-icon>
@@ -37,13 +107,7 @@
           <h3>Bookings</h3>
         </ion-card>
       </ion-col>
-      <!-- <ion-col size="6">
-        <ion-card class="ion-text-center ion-padding" color="danger">
-          <ion-icon style="font-size: 50px;" name="settings"></ion-icon>
-          <h3>Settings</h3>
-        </ion-card>
-      </ion-col> -->
-    </ion-row>
+    </ion-row> -->
   </ion-grid>
 
 

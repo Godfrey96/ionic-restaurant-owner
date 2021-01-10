@@ -31,7 +31,7 @@ export class MenuPage implements OnInit {
     console.log('user: ', user)
 
     //fetching all restaurants
-    firebase.firestore().collection('restaurants').onSnapshot(res => {
+    firebase.firestore().collection('restaurants').where('ownerId', '==', user).onSnapshot(res => {
       res.forEach(element => {
         this.restaurantLists.push(Object.assign(element.data(), { uid: element.id }));
         this.restId = { uid: element.id }.uid
@@ -41,19 +41,13 @@ export class MenuPage implements OnInit {
         firebase.firestore().collection('restaurants').doc(this.restId).collection('menu').onSnapshot(data => {
           data.forEach(doc => {
             this.menu.push(doc.data());
+            console.log('MENUS - 2: ', this.menu)
           })
         })
 
-        // firebase.firestore().collection('restaurants').doc(this.restId).get().then(snapshot => {
-        //   this.restaurants = snapshot.data();
-        //   //console.log('new data: ', this.restaurants)
-        //   if (user === 'ownerId') {
-        //     this.show = this.restaurants
-        //   }
-        // })
-
       });
     });
+
 
     // fetching all menus
     // firebase.firestore().collection('restaurants').doc(user).collection('menu').where('ownerId', '==' , user).onSnapshot(res => {

@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="dashboard"></ion-back-button>
+    </ion-buttons>
+    <ion-title>reviews</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+
+        <p *ngIf="reviews.length > 0"></p>
+        <ion-list *ngFor="let rev of reviews">
+          <ion-item>
+            <ion-avatar slot="start">
+              <img src="https://ionicframework.com/docs/demos/api/avatar/avatar.svg" style="border-radius: 100%;" />
+            </ion-avatar>
+            <ion-label>
+              <small><b>{{ rev.firstName }} {{ rev.lastName }}</b></small>
+              <!-- <h3 >Stars</h3> -->
+              <p style="font-size: x-small;">{{rev.review}}</p>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+        <p style="text-align: center;" class="info-text mat-body-1 center" *ngIf="reviews.length <= 0">
+          No one left a review yet!
+        </p>
+        
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

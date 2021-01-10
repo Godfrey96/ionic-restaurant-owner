@@ -33,7 +33,7 @@ export class ProfilePage implements OnInit {
     console.log('user: ', user)
 
     //fetching all restaurants
-    firebase.firestore().collection('restaurants').onSnapshot(res => {
+    firebase.firestore().collection('restaurants').where('ownerId', '==', user).onSnapshot(res => {
       res.forEach(element => {
         this.restaurantLists.push(Object.assign(element.data(), { uid: element.id }));
         this.restId = { uid: element.id }.uid

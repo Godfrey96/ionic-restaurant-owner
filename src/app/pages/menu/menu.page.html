@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="dashboard"></ion-back-button>
+      <ion-back-button defaultHref="tabs/dashboard"></ion-back-button>
     </ion-buttons>
     <ion-title>Menu</ion-title>
   </ion-toolbar>
@@ -15,6 +15,7 @@
       <ion-button (click)="addmuenu()">Add menu</ion-button>
     </div>
 
+    <p *ngIf="menu.length > 0"></p>
     <ion-list>
 
       <ion-item *ngFor="let menus of menu" [routerLink]="'/view-menu/' +menus?.menuId">  
@@ -29,6 +30,9 @@
       </ion-item>
 
     </ion-list>
+    <p style="text-align: center;" class="info-text mat-body-1 center" *ngIf="menu.length <= 0">
+      No menu/meals!
+    </p>
     
   </div>
 
