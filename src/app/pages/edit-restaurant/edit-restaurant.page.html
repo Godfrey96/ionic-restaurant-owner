@@ -77,7 +77,7 @@
           </ion-row> -->
         </ion-list>
 
-        <ion-button class="btnsignup" (click)="editRes()" fill="clear" *ngIf="!spin">
+        <ion-button class="btnsignup" [disabled]="!editRestaurantForm.valid" (click)="editRes()" fill="clear" *ngIf="!spin">
           Update Restaurant
         </ion-button>
 

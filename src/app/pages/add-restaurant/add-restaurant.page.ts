@@ -21,6 +21,7 @@ export class AddRestaurantPage implements OnInit {
   spin: boolean = false;
 
   ownerId: any;
+  isSubmitted: boolean = false;
 
   selectedFile: File = null;
   upLoadedFile: any;
@@ -55,6 +56,11 @@ export class AddRestaurantPage implements OnInit {
       // address: this.fb.array([this.addAddressGroup()]),
     });
   }
+
+  get errorCtr() {
+    return this.addRestaurantForm.controls
+  }
+
 
   onFileSelected(event) {
     const file: File = event.target.files[0];
@@ -92,134 +98,84 @@ export class AddRestaurantPage implements OnInit {
   //   return <FormArray>this.addRestaurantForm.get('address');
   // }
 
-  get resName() {
-    return this.addRestaurantForm.get("resName");
-  }
-
-  get phone() {
-    return this.addRestaurantForm.get("phone");
-  }
-
-  get website() {
-    return this.addRestaurantForm.get("website");
-  }
-
-  get imgUrl() {
-    return this.addRestaurantForm.get("imgUrl");
-  }
-  get email() {
-    return this.addRestaurantForm.get("email");
-  }
-  get address() {
-    return this.addRestaurantForm.get("address");
-  }
-  // get street() {
-  //   return this.addRestaurantForm.get("address.street");
-  // }
-  // get city() {
-  //   return this.addRestaurantForm.get("address.city");
-  // }
-  // get province() {
-  //   return this.addRestaurantForm.get("address.province");
-  // }
-  // get zipCode() {
-  //   return this.addRestaurantForm.get("address.zipCode");
-  // }
-
-  public errorMessages = {
-    resName: [
-      { type: 'required', message: 'Name is required' },
-      { type: 'maxlength', message: 'Name cannot be longer than 100 characters' }
-    ],
-    email: [
-      { type: 'required', message: 'Email is required' },
-      { type: 'pattern', message: 'Please provide valid email.' }
-    ],
-    phone: [
-      { type: 'required', message: 'Mobile number is required.' },
-      { type: 'minlength', message: 'Mobile number cannot be less than 10 digits.' },
-      { type: 'maxlength', message: 'Mobile number cannot be more than 10 digits.' },
-      { type: 'pattern', message: 'Only numerical values allowed.' }
-    ],
-    imgUrl: [
-      { type: 'required', message: 'Image is required.' }
-    ],
-    address: [
-      { type: 'required', message: 'Address name is required' },
-      { type: 'maxlength', message: 'Address name cannot be longer than 100 characters' }
-    ]
-    // street: [
-    //   { type: 'required', message: 'Street name is required' },
-    //   { type: 'maxlength', message: 'Street name cannot be longer than 100 characters' }
-    // ],
-    // city: [
-    //   { type: 'required', message: 'City name is required' },
-    //   { type: 'maxlength', message: 'City name cannot be longer than 100 characters' }
-    // ],
-    // province: [
-    //   { type: 'required', message: 'Province name is required' },
-    //   { type: 'maxlength', message: 'Province name cannot be longer than 100 characters' }
-    // ],
-    // zipCode: [
-    //   { type: 'required', message: 'Zip code is required' },
-    //   { type: 'pattern', message: 'Please enter a valid zip coe' }
-    // ]
-  }
-
 
   async addRes() {
 
-    const alert = await this.alertCtrl.create({
+    firebase.auth().onAuthStateChanged(async (user) => {
+      if(user){
 
-      message: `Your restaurant is added successfulluy, please click Okay to confirm`,
-      buttons: [
-        {
-          text: 'Okay',
-          handler: () => {
+        this.isSubmitted = true;
+        if(this.addRestaurantForm.valid){
 
-            console.log(this.addRestaurantForm.value);
-            var user = firebase.auth().currentUser
-            this.ownerId = user.uid;
+          const alert = await this.alertCtrl.create({
 
-            // Add Restaurant
-            firebase.firestore().collection('restaurants').add({
-              ownerId: this.ownerId,
-              resName: this.addRestaurantForm.value.resName,
-              phone: this.addRestaurantForm.value.phone,
-              email: this.addRestaurantForm.value.email,
-              website: this.addRestaurantForm.value.website,
-              imgUrl: this.addRestaurantForm.value.imgUrl,
-              address: this.addRestaurantForm.value.address,
-              createdAt: firebase.firestore.FieldValue.serverTimestamp()
-            }).then((doc) => {
-              doc.set({ restId: doc.id }, { merge: true }).then(() => {
-                console.log('REST_ID: ', this.restId)
-              })
-              this.nav.navigateRoot('/profile');
-              this.addRestaurantForm.reset();
-            }).catch(function(error){
-              console.log(error)
-            });
+            message: `Your restaurant is added successfulluy, please click Okay to confirm`,
+            buttons: [
+              {
+                text: 'Okay',
+                handler: () => {
+      
+                  console.log(this.addRestaurantForm.value);
+                  var user = firebase.auth().currentUser
+                  this.ownerId = user.uid;
+      
+                  // Add Restaurant
+                  firebase.firestore().collection('restaurants').add({
+                    ownerId: this.ownerId,
+                    resName: this.addRestaurantForm.value.resName,
+                    phone: this.addRestaurantForm.value.phone,
+                    email: this.addRestaurantForm.value.email,
+                    website: this.addRestaurantForm.value.website,
+                    imgUrl: this.addRestaurantForm.value.imgUrl,
+                    address: this.addRestaurantForm.value.address,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                  }).then((doc) => {
+                    doc.set({ restId: doc.id }, { merge: true }).then(() => {
+                      console.log('REST_ID: ', this.restId)
+                    })
+                    this.nav.navigateRoot('/profile');
+                    this.addRestaurantForm.reset();
+                  }).catch(function(error){
+                    console.log(error)
+                  });
+                },
+              },
+            ]
+          });
+          return await alert.present();
 
-            // this.restaurantService.AddRestaurant().doc(this.ownerId).set({
-            //   ownerId: this.ownerId,
-            //   resName: this.addRestaurantForm.value.resName,
-            //   phone: this.addRestaurantForm.value.phone,
-            //   email: this.addRestaurantForm.value.email,
-            //   website: this.addRestaurantForm.value.website,
-            //   imgUrl: this.addRestaurantForm.value.imgUrl,
-            //   address: this.addRestaurantForm.value.address
-            // }).then(() => {
-            //   this.nav.navigateRoot('/profile');
-            //   this.addRestaurantForm.reset();
-            // }).catch(function(error){
-            //   console.log(error)
-            // });
-          },
-        },
-      ]
-    });
-    return await alert.present();
+        }else{
+
+          const alert = await this.alertCtrl.create({
+            
+            cssClass: 'my-custom-class',
+            message: `All fields are required`,
+            buttons: [
+              {
+                text: 'Okay'
+              }
+            ]
+    
+          });
+          return await alert.present();
+
+        }
+
+      }else{
+        const alert = await this.alertCtrl.create({
+            
+          cssClass: 'my-custom-class',
+          message: `In order to create a restaurant you must be logged in`,
+          buttons: [
+            {
+              text: 'Okay'
+            }
+          ]
+  
+        });
+        return await alert.present();
+      }
+    })
     
   }
 

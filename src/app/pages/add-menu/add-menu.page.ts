@@ -73,52 +73,57 @@ export class AddMenuPage implements OnInit {
 
   async addMenu() {
 
-    const loading = await this.loadingCtrl.create();
+    firebase.auth().onAuthStateChanged(async (user) => {
+      if (user) {
 
-    var user = firebase.auth().currentUser
-    this.ownerId = user.uid;
-    console.log('owner Idd: ', this.ownerId)
+        const loading = await this.loadingCtrl.create();
+
+        // var user = firebase.auth().currentUser
+        // this.ownerId = user.uid;
+        // console.log('owner Idd: ', this.ownerId)
 
 
-      //fetching all restaurants
-    firebase.firestore().collection('restaurants').where('ownerId', '==', this.ownerId).onSnapshot(res => {
-      res.forEach(async element => {
-        this.restaurantLists.push(Object.assign(element.data(), { uid: element.id }));
-        this.restId = { uid: element.id }.uid
-        console.log('rest id: ', this.restId)
+        //fetching all restaurants
+        firebase.firestore().collection('restaurants').where('ownerId', '==', user.uid).onSnapshot(res => {
+          res.forEach(async element => {
+            this.restaurantLists.push(Object.assign(element.data(), { uid: element.id }));
+            this.restId = { uid: element.id }.uid
+            console.log('rest id: ', this.restId)
 
-          // Adding new menu
-        firebase.firestore().collection('restaurants').doc(this.restId).collection('menu').add({
-          ownerId: this.ownerId,
-          restId: this.restId,
-          name: this.addMenuForm.value.name,
-          price: this.addMenuForm.value.price,
-          description: this.addMenuForm.value.description,
-          imgUrl: this.addMenuForm.value.imgUrl,
-          createdAt: firebase.firestore.FieldValue.serverTimestamp()
-        }).then((doc) => {
-          doc.set({ menuId: doc.id }, { merge: true }).then(() => {
-            console.log('MENU_ID: ', this.menuId)
-          })
-        })
-          .then(() => {
-            loading.dismiss().then(() => {
-              this.nav.navigateRoot('/menu')
-              this.addMenuForm.reset();
-            });
-          },
-            error => {
-              loading.dismiss().then(() => {
-                console.log(error);
-              });
-            }
-          );
-        return await loading.present();
+            // Adding new menu
+            firebase.firestore().collection('restaurants').doc(this.restId).collection('menu').add({
+              ownerId: user.uid,
+              restId: this.restId,
+              name: this.addMenuForm.value.name,
+              price: this.addMenuForm.value.price,
+              description: this.addMenuForm.value.description,
+              imgUrl: this.addMenuForm.value.imgUrl,
+              createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            }).then((doc) => {
+              doc.set({ menuId: doc.id }, { merge: true }).then(() => {
+                console.log('MENU_ID: ', this.menuId)
+              })
+            })
+              .then(() => {
+                loading.dismiss().then(() => {
+                  this.nav.navigateRoot('/menu')
+                  this.addMenuForm.reset();
+                });
+              },
+                error => {
+                  loading.dismiss().then(() => {
+                    console.log(error);
+                  });
+                }
+              );
+            return await loading.present();
 
-      });
-    });
+          });
+        });
 
-    
+      }
+    })
+
   }
 
 }

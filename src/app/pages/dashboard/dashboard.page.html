@@ -13,6 +13,16 @@
 
     <ion-row style="margin-top: 20px;">
       <ion-col size="6">
+        <ion-card routerLink="/stats">
+          <ion-card-header style="text-align: center;">
+            <ion-card-title>Dashboard</ion-card-title>
+          </ion-card-header>
+
+          <ion-card-content></ion-card-content>
+        </ion-card>
+      </ion-col>
+
+      <ion-col size="6">
         <ion-card routerLink="/view-bookings">
           <ion-card-header style="text-align: center;">
             <ion-card-title>Bookings</ion-card-title>
@@ -20,18 +30,6 @@
 
           <ion-card-content>
             <h4 style="text-align: center;">{{ this.bookingSize }}</h4>
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-
-      <ion-col size="6">
-        <ion-card routerLink="/reviews">
-          <ion-card-header style="text-align: center;">
-            <ion-card-title>Reviews</ion-card-title>
-          </ion-card-header>
-
-          <ion-card-content>
-            <h4 style="text-align: center;">{{ this.reviewSize }}</h4>
           </ion-card-content>
         </ion-card>
       </ion-col>
@@ -77,13 +75,15 @@
       </ion-col>
 
       <ion-col size="6">
-        <!-- <ion-card>
+        <ion-card routerLink="/reviews">
           <ion-card-header style="text-align: center;">
             <ion-card-title>Reviews</ion-card-title>
           </ion-card-header>
 
-          <ion-card-content>25</ion-card-content>
-        </ion-card> -->
+          <ion-card-content>
+            <h4 style="text-align: center;">{{ this.reviewSize }}</h4>
+          </ion-card-content>
+        </ion-card>
       </ion-col>
     </ion-row>
     <!-- <ion-row>

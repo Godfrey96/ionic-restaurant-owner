@@ -27,26 +27,34 @@ export class MenuPage implements OnInit {
   ngOnInit() {
     this.authService.signAuth();
 
-    let user = firebase.auth().currentUser.uid
-    console.log('user: ', user)
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
 
-    //fetching all restaurants
-    firebase.firestore().collection('restaurants').where('ownerId', '==', user).onSnapshot(res => {
-      res.forEach(element => {
-        this.restaurantLists.push(Object.assign(element.data(), { uid: element.id }));
-        this.restId = { uid: element.id }.uid
-        console.log('rest id: ', this.restId)
+        // let user = firebase.auth().currentUser.uid
+        // console.log('user: ', user)
 
-        // Fetching Menu by id
-        firebase.firestore().collection('restaurants').doc(this.restId).collection('menu').onSnapshot(data => {
-          data.forEach(doc => {
-            this.menu.push(doc.data());
-            console.log('MENUS - 2: ', this.menu)
-          })
-        })
+        //fetching all restaurants
+        firebase.firestore().collection('restaurants').where('ownerId', '==', user.uid).onSnapshot(res => {
+          res.forEach(element => {
+            this.restaurantLists.push(Object.assign(element.data(), { uid: element.id }));
+            this.restId = { uid: element.id }.uid
+            console.log('rest id: ', this.restId)
 
-      });
-    });
+            // Fetching Menu by id
+            firebase.firestore().collection('restaurants').doc(this.restId).collection('menu').onSnapshot(data => {
+              data.forEach(doc => {
+                this.menu.push(doc.data());
+                console.log('MENUS - 2: ', this.menu)
+              })
+            })
+
+          });
+        });
+
+      }
+    })
+
+
 
 
     // fetching all menus

@@ -22,45 +22,55 @@ export class ViewBookingsPage implements OnInit {
   bookingSize: any;
 
   constructor(
-              public loadingCtrl: LoadingController,
-              public alertCtrl: AlertController,
-              public toastCtrl: ToastController,
-              private authService: AuthService,
-              private restaurantService: RestaurantService
+    public loadingCtrl: LoadingController,
+    public alertCtrl: AlertController,
+    public toastCtrl: ToastController,
+    private authService: AuthService,
+    private restaurantService: RestaurantService
   ) { }
 
   ngOnInit() {
     this.authService.signAuth();
 
-    let user = firebase.auth().currentUser.uid
-    console.log('user: ', user)
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
 
-    //fetching all restaurants
-    firebase.firestore().collection('restaurants').onSnapshot(res => {
-      res.forEach(element => {
-        this.restaurants.push(Object.assign(element.data(), {uid:element.id}));
-        this.restId = {uid:element.id}.uid;
+        let user = firebase.auth().currentUser.uid
+        console.log('user: ', user)
 
-        firebase.firestore().collection('restaurants').doc(this.restId).collection('bookings').where('restId', '==', this.restId).orderBy('createdAt', 'desc').where('resManagerId', '==', user).onSnapshot(res => {
-          res.forEach(doc => {
-            this.booking.push(Object.assign(doc.data(), {uid:doc.id}))
-            this.bookingSize = (this.booking).length
-            console.log('booking size: ', this.bookingSize)
-            console.log('DI BOOKINGS: ', this.booking)
-          })
-        })
+        //fetching all restaurants
+        firebase.firestore().collection('restaurants').onSnapshot(res => {
+          res.forEach(element => {
+            this.restaurants.push(Object.assign(element.data(), { uid: element.id }));
+            this.restId = { uid: element.id }.uid;
 
-      });
-    });
+            firebase.firestore().collection('restaurants').doc(this.restId).collection('bookings').where('restId', '==', this.restId).orderBy('createdAt', 'desc').where('resManagerId', '==', user).onSnapshot(res => {
+              res.forEach(doc => {
+                this.booking.push(Object.assign(doc.data(), { uid: doc.id }))
+                this.bookingSize = (this.booking).length
+                console.log('booking size: ', this.bookingSize)
+                console.log('DI BOOKINGS: ', this.booking)
+              })
+            })
+
+          });
+        });
+
+      } else {
+        console.log('not logged in')
+      }
+    })
+
+
   }
 
   //Booking status
-  status(restId, bookId, status){
+  status(restId, bookId, status) {
     this.restaurantService.bookingStatus(restId, bookId, status);
     // this.disableButton = true;
   }
 
-  ago(time){
+  ago(time) {
     let difference = moment(time).diff(moment())
     return moment.duration(difference).humanize();
   }

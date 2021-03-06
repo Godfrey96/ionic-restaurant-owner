@@ -89,6 +89,10 @@ const routes: Routes = [
     path: 'user-profile',
     loadChildren: () => import('./pages/user-profile/user-profile.module').then( m => m.UserProfilePageModule)
   },
+  {
+    path: 'stats',
+    loadChildren: () => import('./pages/stats/stats.module').then( m => m.StatsPageModule)
+  },
   // {
   //   path: 'dash-profile',
   //   loadChildren: () => import('./pages/dash-profile/dash-profile.module').then( m => m.DashProfilePageModule)

@@ -108,36 +108,57 @@ export class EditRestaurantPage implements OnInit {
   // Method for updating the restaurant
   async editRes() {
 
-    const alert = await this.alertCtrl.create({
+    firebase.auth().onAuthStateChanged(async (user) => {
+      if(user){
 
-      message: `Your restaurant is updated successfully, please click Okay to confirm.`,
-      buttons: [
-        {
-          text: 'Okay',
-          handler: () => {
+        const alert = await this.alertCtrl.create({
 
-            var user = firebase.auth().currentUser
-            this.ownerId = user.uid;
+          message: `Your restaurant is updated successfully, please click Okay to confirm.`,
+          buttons: [
+            {
+              text: 'Okay',
+              handler: () => {
+    
+                var user = firebase.auth().currentUser
+                this.ownerId = user.uid;
+    
+                firebase.firestore().collection('restaurants').doc(this.id).update({
+                  // onwerId: this.ownerId,
+                  resName: this.editRestaurantForm.value.resName,
+                  phone: this.editRestaurantForm.value.phone,
+                  email: this.editRestaurantForm.value.email,
+                  website: this.editRestaurantForm.value.website,
+                  imgUrl: this.editRestaurantForm.value.imgUrl,
+                  address: this.editRestaurantForm.value.address
+                }).then(() => {
+                  this.nav.navigateRoot('/profile')
+                  this.editRestaurantForm.reset();
+                }).catch(function(error){
+                  console.log(error);
+                });
+              }
+            }
+          ]
+        });
+        return await alert.present();
 
-            firebase.firestore().collection('restaurants').doc(this.id).update({
-              // onwerId: this.ownerId,
-              resName: this.editRestaurantForm.value.resName,
-              phone: this.editRestaurantForm.value.phone,
-              email: this.editRestaurantForm.value.email,
-              website: this.editRestaurantForm.value.website,
-              imgUrl: this.editRestaurantForm.value.imgUrl,
-              address: this.editRestaurantForm.value.address
-            }).then(() => {
-              this.nav.navigateRoot('/profile')
-              this.editRestaurantForm.reset();
-            }).catch(function(error){
-              console.log(error);
-            });
-          }
-        }
-      ]
-    });
-    return await alert.present();
+      }else{
+        const alert = await this.alertCtrl.create({
+            
+          cssClass: 'my-custom-class',
+          message: `In order to update a restaurant you must be logged in`,
+          buttons: [
+            {
+              text: 'Okay'
+            }
+          ]
+  
+        });
+        return await alert.present();
+      }
+    })
+
+    
 
     
 

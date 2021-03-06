@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="dashboard"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Stats</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div [hidden]="isDisplay">
+    <h4 style="text-align: left; margin-left: 15px; margin-bottom: 5px; font-weight: bold; text-decoration: underline;">Booking Status</h4>
+    <canvas #doughnutCanvas></canvas>
+  </div>
+
+  <div>
+    <h4 style="text-align: left; margin-left: 15px; margin-top: 50px; font-weight: bold; text-decoration: underline;">Total Bookings</h4>
+    <div class="total" style="background-color: #056608;">
+      <h6 class="font">{{ this.allTotalBooking }}</h6>
+    </div>
+  </div>
+
+  <div>
+    <h4 style="text-align: left; margin-left: 15px; margin-top: 50px; font-weight: bold; text-decoration: underline;">Total Reviews</h4>
+    <div class="total" style="background-color: #C70039;">
+      <h6 class="font">{{ this.totalReviews }}</h6>
+    </div>
+  </div>
+
+</ion-content>

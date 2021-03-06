@@ -22,106 +22,100 @@ export class SigninPage implements OnInit {
   name: any;
 
   constructor(
-              public nav: NavController,
-              public loadingCtrl: LoadingController,
-              private fb: FormBuilder,
-              private authService: AuthService,
-              private alertCtrl: AlertController,
-              public toastCtrl: ToastController
-            ) { 
-              // this.authService.getSession();
-            }
+    public nav: NavController,
+    public loadingCtrl: LoadingController,
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private alertCtrl: AlertController,
+    public toastCtrl: ToastController
+  ) {
+    // this.authService.getSession();
+  }
 
   ngOnInit() {
-    // this.authService.signAuth();
-
-    // let user = firebase.auth().currentUser.uid
-    // console.log('user: ', user)
-
-    // //Getting logged owner
-    // firebase.firestore().collection('owners').doc(user).get().then(snapshot => {
-    //   this.owners = snapshot.data();
-    //   this.name = snapshot.get('name');
-    //   console.log('new data: ', this.owners)
-    // })
-
     this.loginOwner();
-    
+
   }
-  loginOwner(){
+  
+  loginOwner() {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9._%-]+@[a-zA-Z0-9.0]+.[a-zA-Z]{2,4}$')]],
       password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(10)]]
     });
   }
 
-  get email() {
-    return this.loginForm.get("email");
+  get errorCtr() {
+    return this.loginForm.controls
   }
 
-  get password() {
-    return this.loginForm.get("password");
-  }
 
-  public errorMessages = {
-    email: [
-      { type: 'required', message: 'Email is required' },
-      { type: 'pattern', message: 'Please provide valid email.' }
-    ],
-    password: [
-      { type: 'required', message: 'Password is required.' },
-      { type: 'minlength', message: 'Password cannot be less than 5 characters.' },
-      { type: 'maxlength', message: 'Password cannot be more than 10 characters.' }
-    ]
-  }
+  async login_Owner() {
 
-  async login_Owner(){
+    this.isSubmitted = true;
 
-    const loading = await this.loadingCtrl.create();
+    if (this.loginForm.valid) {
 
-    this.authService.signAuth();
- 
-    console.log(this.loginForm.value);
+      const loading = await this.loadingCtrl.create();
 
-    this.authService.signinOwner(this.loginForm.value.email, this.loginForm.value.password).then((res) => {
-      console.log(res.user);
+      this.authService.signAuth();
 
-      //Getting logged in owner
-      let user = firebase.auth().currentUser.uid
-      console.log('user: ', user)
-      firebase.firestore().collection('restaurantManagers').doc(user).get().then(async snapshot => {
-        this.owners = snapshot.data();
-        this.name = snapshot.get('name');
-        console.log('name: ', this.name)
-        console.log('new data: ', this.owners)
+      console.log(this.loginForm.value);
 
-        const toast = await this.toastCtrl.create({
-          message: "Welcome " + this.name,
-          duration: 3000
+      this.authService.signinOwner(this.loginForm.value.email, this.loginForm.value.password).then((res) => {
+        console.log(res.user);
+
+        //Getting logged in owner
+        let user = firebase.auth().currentUser.uid
+        console.log('user: ', user)
+        firebase.firestore().collection('restaurantManagers').doc(user).get().then(async snapshot => {
+          this.owners = snapshot.data();
+          this.name = snapshot.get('name');
+          console.log('name: ', this.name)
+          console.log('new data: ', this.owners)
+
+          const toast = await this.toastCtrl.create({
+            message: "Welcome " + this.name,
+            duration: 3000
+          });
+          toast.present();
+
+        })
+
+      }).then(() => {
+
+        loading.dismiss().then(() => {
+          this.nav.navigateRoot('/tabs/dashboard');
         });
-        toast.present();
+      },
+        async error => {
+          const toast = await this.toastCtrl.create({
+            message: error.message,
+            duration: 3000
+          });
+          toast.present();
+          loading.dismiss().then(() => {
+            console.log(error);
+          });
+        }
+      );
+      return await loading.present();
 
-      })
+    }else{
+      console.log('All fields are required')
+      const alert = await this.alertCtrl.create({
+            
+        cssClass: 'my-custom-class',
+        message: `All fields are required`,
+        buttons: [
+          {
+            text: 'Okay'
+          }
+        ]
 
-    }).then(() => {
-
-      loading.dismiss().then(() => {
-        this.nav.navigateRoot('/tabs/dashboard');
       });
-    },
-    async error => {
-      const toast = await this.toastCtrl.create({
-        message: error.message,
-        duration: 3000
-      });
-      toast.present();
-      loading.dismiss().then(() => {
-        console.log(error);
-      });
+      return await alert.present();
     }
-    );
-    return await loading.present();
-    
+
   }
 
 }

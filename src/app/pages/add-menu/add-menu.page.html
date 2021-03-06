@@ -30,7 +30,7 @@
           
         </ion-list>
           
-        <ion-button class="btnsignup" (click)="addMenu()" *ngIf="!spin">
+        <ion-button class="btnsignup" [disabled]="!addMenuForm.valid" (click)="addMenu()" *ngIf="!spin">
           Add Menu
         </ion-button>
 

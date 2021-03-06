@@ -19,42 +19,50 @@ export class PendingPage implements OnInit {
   pendingSize: any;
 
   constructor(
-              private authService: AuthService,
-              private restaurantService: RestaurantService
-            ) { }
+    private authService: AuthService,
+    private restaurantService: RestaurantService
+  ) { }
 
   ngOnInit() {
     this.authService.signAuth();
 
-    let user = firebase.auth().currentUser.uid
-    console.log('user: ', user)
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
 
-    //fetching all restaurants
-    firebase.firestore().collection('restaurants').onSnapshot(res => {
-      res.forEach(element => {
-        this.restaurants.push(Object.assign(element.data(), {uid:element.id}));
-        this.restId = {uid:element.id}.uid;
+        // let user = firebase.auth().currentUser.uid
+        // console.log('user: ', user)
 
-        firebase.firestore().collection('restaurants').doc(this.restId).collection('bookings').where('restId', '==', this.restId).orderBy('createdAt', 'desc').where('resManagerId', '==', user).where('status', '==', 'Pending').onSnapshot(res => {
-          res.forEach(doc => {
-            this.pendingBooking.push(Object.assign(doc.data(), {uid:doc.id}))
-            this.pendingSize = (this.pendingBooking).length
-            console.log('Pending size: ', this.pendingSize)
-          })
-        })
+        //fetching all restaurants
+        firebase.firestore().collection('restaurants').onSnapshot(res => {
+          res.forEach(element => {
+            this.restaurants.push(Object.assign(element.data(), { uid: element.id }));
+            this.restId = { uid: element.id }.uid;
 
-      });
-    });
+            firebase.firestore().collection('restaurants').doc(this.restId).collection('bookings').where('restId', '==', this.restId).orderBy('createdAt', 'desc').where('resManagerId', '==', user.uid).where('status', '==', 'Pending').onSnapshot(res => {
+              res.forEach(doc => {
+                this.pendingBooking.push(Object.assign(doc.data(), { uid: doc.id }))
+                this.pendingSize = (this.pendingBooking).length
+                console.log('Pending size: ', this.pendingSize)
+              })
+            })
+
+          });
+        });
+
+      }
+    })
+
+
   }
 
 
-   //Booking status
-   status(restId, bookId, status){
+  //Booking status
+  status(restId, bookId, status) {
     this.restaurantService.bookingStatus(restId, bookId, status);
     // this.disableButton = true;
   }
 
-  ago(time){
+  ago(time) {
     let difference = moment(time).diff(moment())
     return moment.duration(difference).humanize();
   }

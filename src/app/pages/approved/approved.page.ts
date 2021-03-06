@@ -19,41 +19,48 @@ export class ApprovedPage implements OnInit {
   approvedSize: any;
 
   constructor(
-              private authService: AuthService,
-              private restaurantService: RestaurantService
-            ) { }
+    private authService: AuthService,
+    private restaurantService: RestaurantService
+  ) { }
 
   ngOnInit() {
     this.authService.signAuth();
 
-    let user = firebase.auth().currentUser.uid
-    console.log('user: ', user)
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
 
-    //fetching all restaurants
-    firebase.firestore().collection('restaurants').onSnapshot(res => {
-      res.forEach(element => {
-        this.restaurants.push(Object.assign(element.data(), {uid:element.id}));
-        this.restId = {uid:element.id}.uid;
+        // let user = firebase.auth().currentUser.uid
+        // console.log('user: ', user)
 
-        firebase.firestore().collection('restaurants').doc(this.restId).collection('bookings').where('restId', '==', this.restId).where('status', '==', 'Approved').orderBy('createdAt', 'desc').where('resManagerId', '==', user).onSnapshot(res => {
-          res.forEach(doc => {
-            this.ApprovedBooking.push(Object.assign(doc.data(), {uid:doc.id}))
-            console.log('Approved Booking: ', this.ApprovedBooking)
-            this.approvedSize = (this.ApprovedBooking).length
-            console.log('Approved size: ', this.approvedSize)
-          })
-        })
-      });
-    });
+        //fetching all restaurants
+        firebase.firestore().collection('restaurants').onSnapshot(res => {
+          res.forEach(element => {
+            this.restaurants.push(Object.assign(element.data(), { uid: element.id }));
+            this.restId = { uid: element.id }.uid;
+
+            firebase.firestore().collection('restaurants').doc(this.restId).collection('bookings').where('restId', '==', this.restId).where('status', '==', 'Approved').orderBy('createdAt', 'desc').where('resManagerId', '==', user.uid).onSnapshot(res => {
+              res.forEach(doc => {
+                this.ApprovedBooking.push(Object.assign(doc.data(), { uid: doc.id }))
+                console.log('Approved Booking: ', this.ApprovedBooking)
+                this.approvedSize = (this.ApprovedBooking).length
+                console.log('Approved size: ', this.approvedSize)
+              })
+            })
+          });
+        });
+
+      }
+    })
+
   }
 
   //Booking status
-  status(restId, bookId, status){
+  status(restId, bookId, status) {
     this.restaurantService.bookingStatus(restId, bookId, status);
     // this.disableButton = true;
   }
 
-  ago(time){
+  ago(time) {
     let difference = moment(time).diff(moment())
     return moment.duration(difference).humanize();
   }

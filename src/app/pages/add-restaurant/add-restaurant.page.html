@@ -22,38 +22,41 @@
     <div class="cont-1">
       <form [formGroup]="addRestaurantForm" (ngSubmit)="addRes()">
         <ion-list>
-          <ion-input formControlName="resName" style="margin-bottom: 10px;" type="text" placeholder="Restaurant Name"></ion-input>
-          <div *ngFor="let error of errorMessages.resName">
-            <ng-container *ngIf="resName.hasError(error.type) && (resName.dirty || resName.touched)">
-              <small class="error-message">{{error.message}}</small>
-            </ng-container>
-          </div>
+          <ion-input formControlName="resName" style="margin-bottom: 10px;" type="text" placeholder="Restaurant Name">
+          </ion-input>
+          <span class="error ion-padding" *ngIf="isSubmitted && errorCtr.resName.errors?.required" style="color: red;">
+            Restaurant name required.
+          </span>
           <ion-input formControlName="phone" style="margin-bottom: 10px;" type="text" placeholder="Phone"></ion-input>
-          <div *ngFor="let error of errorMessages.phone">
-            <ng-container *ngIf="phone.hasError(error.type) && (phone.dirty || phone.touched)">
-              <small class="error-message">{{error.message}}</small>
-            </ng-container>
-          </div>
+          <span class="error ion-padding" *ngIf="isSubmitted && errorCtr.phone.errors?.required" style="color: red;">
+            Phone number is required.
+          </span>
+          <span class="error ion-padding" *ngIf="isSubmitted && errorCtr.phone.errors?.pattern" style="color: red;">
+            Number values allowed.
+          </span>
           <ion-input formControlName="email" style="margin-bottom: 10px;" type="email" placeholder="Email"></ion-input>
-          <div *ngFor="let error of errorMessages.email">
-            <ng-container *ngIf="email.hasError(error.type) && (email.dirty || email.touched)">
-              <small class="error-message">{{error.message}}</small>
-            </ng-container>
-          </div>
-          <ion-input formControlName="address" style="margin-bottom: 10px;" type="text" placeholder="Address"></ion-input>
-          <div *ngFor="let error of errorMessages.address">
-            <ng-container *ngIf="address.hasError(error.type) && (address.dirty || address.touched)">
-              <small class="error-message">{{error.message}}</small>
-            </ng-container>
-          </div>
-          <ion-input formControlName="website" style="margin-bottom: 10px;" type="text" placeholder="Website"></ion-input>
-          <ion-input type="file" formControlName="imgUrl" accept="image/*" (change)="onFileSelected($event)"></ion-input>
+          <span class="error ion-padding" *ngIf="isSubmitted && errorCtr.email.errors?.required" style="color: red;">
+            Email is required.
+          </span>
+          <span class="error ion-padding" *ngIf="isSubmitted && errorCtr.email.errors?.pattern" style="color: red;">
+            Enter valid email.
+          </span>
+          <ion-input formControlName="address" style="margin-bottom: 10px;" type="text" placeholder="Address">
+          </ion-input>
+          <span class="error ion-padding" *ngIf="isSubmitted && errorCtr.address.errors?.required" style="color: red;">
+            Address required.
+          </span>
+          <ion-input formControlName="website" style="margin-bottom: 10px;" type="text" placeholder="Website">
+          </ion-input>
+          <span class="error ion-padding" *ngIf="isSubmitted && errorCtr.website.errors?.required" style="color: red;">
+            Image is required.
+          </span>
+          <ion-input type="file" formControlName="imgUrl" accept="image/*" (change)="onFileSelected($event)">
+          </ion-input>
           <!-- <ion-input type="file" formControlName="imgUrl" accept="image/*" (change)="onFileSelected($event)" style="margin-bottom: 10px;" type="text" placeholder="Restaurant Image"></ion-input> -->
-          <div *ngFor="let error of errorMessages.imgUrl">
-            <ng-container *ngIf="imgUrl.hasError(error.type) && (imgUrl.dirty || imgUrl.touched)">
-              <small class="error-message">{{error.message}}</small>
-            </ng-container>
-          </div>
+          <span class="error ion-padding" *ngIf="isSubmitted && errorCtr.imgUrl.errors?.required" style="color: red;">
+            Image is required.
+          </span>
 
           <!-- <ion-row formArrayName="address">
             <ion-col size="12" *ngFor="let group of addressArray.controls; let i = index;" [formGroupName]="i">
@@ -121,7 +124,7 @@
           </ion-row> -->
         </ion-list>
 
-        <ion-button class="btnsignup" (click)="addRes()" fill="clear" *ngIf="!spin">
+        <ion-button class="btnsignup" [disabled]="!addRestaurantForm.valid" (click)="addRes()" fill="clear" *ngIf="!spin">
           Add Restaurant
         </ion-button>
 

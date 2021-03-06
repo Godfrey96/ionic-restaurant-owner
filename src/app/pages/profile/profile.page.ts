@@ -1,4 +1,4 @@
-import { NavController } from '@ionic/angular';
+import { AlertController, NavController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import firebase from 'firebase/app';
@@ -23,34 +23,54 @@ export class ProfilePage implements OnInit {
   constructor(
     private authService: AuthService,
     private activatedRoute: ActivatedRoute,
-    private nav: NavController
+    private nav: NavController,
+    private alertCtrl: AlertController
   ) { }
 
   ngOnInit() {
     this.authService.signAuth();
 
-    let user = firebase.auth().currentUser.uid
-    console.log('user: ', user)
+    firebase.auth().onAuthStateChanged(async (user) => {
+      if (user) {
 
-    //fetching all restaurants
-    firebase.firestore().collection('restaurants').where('ownerId', '==', user).onSnapshot(res => {
-      res.forEach(element => {
-        this.restaurantLists.push(Object.assign(element.data(), { uid: element.id }));
-        this.restId = { uid: element.id }.uid
-        console.log('rest id: ', this.restId)
+        // let user = firebase.auth().currentUser.uid
+        // console.log('user: ', user)
 
-        // Fetching Restaurant by id
-        firebase.firestore().collection('restaurants').doc(this.restId).get().then(snapshot => {
-          this.restaurants = snapshot.data();
-          //console.log('new data: ', this.restaurants)
-          if (user === 'ownerId') {
-            this.show = this.restaurants
-          }
-        })
+        //fetching all restaurants
+        firebase.firestore().collection('restaurants').where('ownerId', '==', user.uid).onSnapshot(res => {
+          res.forEach(element => {
+            this.restaurantLists.push(Object.assign(element.data(), { uid: element.id }));
+            this.restId = { uid: element.id }.uid
+            console.log('rest id: ', this.restId)
 
-      });
-    });
-    
+            // Fetching Restaurant by id
+            firebase.firestore().collection('restaurants').doc(this.restId).get().then(snapshot => {
+              this.restaurants = snapshot.data();
+              //console.log('new data: ', this.restaurants)
+              if (user.uid === 'ownerId') {
+                this.show = this.restaurants
+              }
+            })
+
+          });
+        });
+
+      } else {
+        const alert = await this.alertCtrl.create({
+
+          cssClass: 'my-custom-class',
+          message: `you must be log in first`,
+          buttons: [
+            {
+              text: 'Okay'
+            }
+          ]
+
+        });
+        return await alert.present();
+      }
+    })
+
   }
 
   editRestaurant() { }

@@ -1,8 +1,8 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttons slot="start">
+    <!-- <ion-buttons slot="start">
       <ion-back-button defaultHref="s"></ion-back-button>
-    </ion-buttons>
+    </ion-buttons> -->
     <ion-title>Sign In</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -18,19 +18,18 @@
     <div class="cont-1">
       <form [formGroup]="loginForm" (ngSubmit)="login_Owner()">
         <ion-input formControlName="email" style="margin-bottom: 10px;" type="email" placeholder="Email"></ion-input>
-        <div *ngFor="let error of errorMessages.email">
-          <ng-container *ngIf="email.hasError(error.type) && (email.dirty || email.touched) || isSubmitted">
-            <small class="error-message">{{error.message}}</small>
-          </ng-container>
-        </div>
-        <ion-input formControlName="password" style="margin-bottom: 10px;" type="password" placeholder="Password"></ion-input>
-        <div *ngFor="let error of errorMessages.password">
-          <ng-container *ngIf="password.hasError(error.type) && (password.dirty || password.touched) || isSubmitted">
-            <small class="error-message">{{error.message}}</small>
-          </ng-container>
-        </div>
+        <span class="error ion-padding" *ngIf="isSubmitted && errorCtr.email.errors?.required" style="color: red;">
+          Email is required.
+        </span>
+        <span class="error ion-padding" *ngIf="isSubmitted && errorCtr.email.errors?.pattern" style="color: red;">
+          Enter valid email.
+        </span>
+        <ion-input formControlName="password" style="margin-bottom: 10px;" type="password" placeholder="Password"></ion-input>  
+        <span class="error ion-padding" *ngIf="isSubmitted && errorCtr.password.errors?.required" style="color: red;">
+          Password is required.
+        </span>
 
-        <ion-button class="btnsignup" (click)="login_Owner()" fill="clear" *ngIf="!spin">
+        <ion-button class="btnsignup" [disabled]="!loginForm.valid" (click)="login_Owner()" fill="clear" *ngIf="!spin">
           Sign in
         </ion-button>
       </form>

@@ -41,81 +41,94 @@ export class SignupPage implements OnInit {
     });
   }
 
-  // get errorControl() {
-  //   return this.ownerForm.controls;
-  // }
-
-  get name() {
-    return this.ownerForm.get("name");
-  }
-
-  get email() {
-    return this.ownerForm.get("email");
-  }
-
-  get mobile() {
-    return this.ownerForm.get("mobile");
-  }
-
-  get password() {
-    return this.ownerForm.get("password");
-  }
-
-  public errorMessages = {
-    name: [
-      { type: 'required', message: 'Name is required' },
-      { type: 'maxLength', message: 'Name cannot be longer than 100 characters' }
-    ],
-    email: [
-      { type: 'required', message: 'Email is required' },
-      { type: 'pattern', message: 'Please provide valid email.' }
-    ],
-    mobile: [
-      { type: 'required', message: 'Mobile number is required.' },
-      { type: 'minlength', message: 'Mobile number cannot be less than 10 digits.' },
-      { type: 'maxlength', message: 'Mobile number cannot be more than 10 digits.' },
-      { type: 'pattern', message: 'Only numerical values allowed.' }
-    ],
-    password: [
-      { type: 'required', message: 'Password is required.' },
-      { type: 'minlength', message: 'Password cannot be less than 5 characters.' },
-      { type: 'maxlength', message: 'Password cannot be more than 10 characters.' }
-    ]
+  get errorCtr(){
+    return this.ownerForm.controls
   }
 
   async register_Owner() {
 
-    const alert = await this.alertCtrl.create({
+        this.isSubmitted = true
 
-      message: `Your account is registered successfully, click Okay to continue to login.`,
-      buttons: [
-        {
-          text: 'Okay',
-          handler: () => {
-            console.log(this.ownerForm.value);
-            this.isSubmitted = true;
-            if(this.ownerForm.valid){
-              this.authService.signupOwner(this.ownerForm.value.email, this.ownerForm.value.password).then((res) => {
-                return firebase.firestore().collection('restaurantManagers').doc(res.user.uid).set({
-                  name: this.ownerForm.value.name,
-                  email: this.ownerForm.value.email,
-                  password: this.ownerForm.value.password,
-                  mobile: this.ownerForm.value.mobile
-                }).then(() => {
-                  console.log(res.user);
-                  this.nav.navigateRoot('/signin');
-                }).catch(function (error) {
-                  console.log(error);
-                });
-              })
-            }else{
-              console.log('Invalid field')
-            }    
-          }
-        },
-      ]
-    });
-    return await alert.present();
+        if(this.ownerForm.valid){
+          const alert = await this.alertCtrl.create({
+
+            message: `Your account is registered successfully, click Okay to continue to login.`,
+            buttons: [
+              {
+                text: 'Okay',
+                handler: () => {
+                  console.log(this.ownerForm.value);
+                  this.isSubmitted = true;
+                  if(this.ownerForm.valid){
+                    this.authService.signupOwner(this.ownerForm.value.email, this.ownerForm.value.password).then((res) => {
+                      return firebase.firestore().collection('restaurantManagers').doc(res.user.uid).set({
+                        restManagerId: res.user.uid,
+                        name: this.ownerForm.value.name,
+                        email: this.ownerForm.value.email,
+                        password: this.ownerForm.value.password,
+                        mobile: this.ownerForm.value.mobile
+                      }).then(() => {
+                        console.log(res.user);
+                        this.nav.navigateRoot('/signin');
+                      }).catch(function (error) {
+                        console.log(error);
+                      });
+                    })
+                  }else{
+                    console.log('Invalid field')
+                  }    
+                }
+              },
+            ]
+          });
+          return await alert.present();
+        }else{
+          console.log('all fields are required')
+          const alert = await this.alertCtrl.create({
+            
+            cssClass: 'my-custom-class',
+            message: `All fields are required`,
+            buttons: [
+              {
+                text: 'Okay'
+              }
+            ]
+
+          });
+          return await alert.present();
+        }
+
+    // const alert = await this.alertCtrl.create({
+
+    //   message: `Your account is registered successfully, click Okay to continue to login.`,
+    //   buttons: [
+    //     {
+    //       text: 'Okay',
+    //       handler: () => {
+    //         console.log(this.ownerForm.value);
+    //         this.isSubmitted = true;
+    //         if(this.ownerForm.valid){
+    //           this.authService.signupOwner(this.ownerForm.value.email, this.ownerForm.value.password).then((res) => {
+    //             return firebase.firestore().collection('restaurantManagers').doc(res.user.uid).set({
+    //               name: this.ownerForm.value.name,
+    //               email: this.ownerForm.value.email,
+    //               password: this.ownerForm.value.password,
+    //               mobile: this.ownerForm.value.mobile
+    //             }).then(() => {
+    //               console.log(res.user);
+    //               this.nav.navigateRoot('/signin');
+    //             }).catch(function (error) {
+    //               console.log(error);
+    //             });
+    //           })
+    //         }else{
+    //           console.log('Invalid field')
+    //         }    
+    //       }
+    //     },
+    //   ]
+    // });
+    // return await alert.present();
   }
 
 }
